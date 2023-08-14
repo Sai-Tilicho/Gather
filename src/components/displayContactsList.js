@@ -13,7 +13,6 @@ const DisplayContactsList = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCount, setSelectedCount] = useState(0);
     const [isAnyContactSelected, setIsAnyContactSelected] = useState(false);
-
     const [selectedLetterNumber, setSelectedLetterNumber] = useState(null);
 
     const contactContainerRef = useRef(null);
@@ -36,7 +35,6 @@ const DisplayContactsList = () => {
 
                     Promise.all(contactDataPromises)
                         .then((contactDataArray) => {
-
                             const validContactData = contactDataArray.filter((contactData) => contactData !== null);
                             setcontactsData(validContactData);
                         })
@@ -110,20 +108,31 @@ const DisplayContactsList = () => {
 
     return (
         <div className='container'>
+
             <div className='header-container'>
+
                 <div className='top_header'>
-                    <Link className='Links Cancel' href={'/'}>Cancel</Link>
+                    <Link className='Links Cancel'
+                        onClick={() => Router.push('/dashboard')}
+                        href={''}>Cancel</Link>
+
                     <div className='add_partici_container'>
                         <p className='Add_partici'>Add Participants</p>
                         <p className='count'> {selectedCount} / {contactsData.length}</p>
                     </div>
-                    {isAnyContactSelected ? (<Link
-                        className={`Links Next ${isAnyContactSelected ? 'blueLink' : ''}`}
-                        href=''
-                        onClick={() => Router.push('/createGroup')}
-                    >Next</Link>) :
-                        (<div className='next'>Next</div>)}
+
+                    {isAnyContactSelected ?
+                        (
+                            <Link
+                                className={`Links Next ${isAnyContactSelected ? 'blueLink' : ''}`}
+                                href=''
+                                onClick={() => Router.push('/createGroup')}
+                            >Next</Link>
+                        ) :
+                        (<div className='next'>Next</div>
+                        )}
                 </div>
+
                 <div className='search_input_container'>
                     <SearchOutlined className='search_icon' />
                     <input
@@ -134,8 +143,11 @@ const DisplayContactsList = () => {
                         onChange={handleSearch}
                     />
                 </div>
+
             </div>
+
             <div className='div_details'>
+
                 <div className='letter_numbers_container'>
                     {scrollItems.map((scrollItem) => (
                         <div className={scrollItem?.scrollToIndex !== -1 ? 'letters' : 'letters-disabled'} key={scrollItem?.char} onClick={() => scrollToLetter(scrollItem)}>
@@ -143,31 +155,43 @@ const DisplayContactsList = () => {
                         </div>
                     ))}
                 </div>
+
                 <div className='contact_container' ref={contactContainerRef}>
+
                     {sortedContacts?.length > 0 ? (
                         sortedContacts?.map((contactData, index) => (
+
                             <div className='container_for_radio' key={index} id={`${index}`}>
+
                                 <div className='contact_container_div' key={index}>
+
                                     <div className='avatar_container'>
                                         <img className='avatar' src={contactData?.avatar_url} alt='' width={25} height={25} />
                                     </div>
+
                                     <div className='contact_details'>
                                         <Tooltip title={contactData?.contact_name} placement='topRight'>
                                             <p className='contact_name'>{capitalizeFirstLetter(contactData?.contact_name)}</p>
                                         </Tooltip>
                                         <p className='contact_number'>{contactData?.mobile_number}</p>
                                     </div>
+
                                 </div>
+
                                 <label class="custom-checkbox">
                                     <input type="checkbox" onChange={(event) => handleCheckboxChange(event, contactData.id)} />
                                     <span class="checkbox-style"></span>
                                 </label>
+
                             </div>
                         ))) : (
+
                         <Empty />
                     )}
                 </div>
+
             </div>
+
         </div>
     );
 }
