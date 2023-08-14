@@ -1,0 +1,60 @@
+@import "https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900";
+
+* {
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Raleway";
+}
+
+.conversationDiv {
+  width: 375pt;
+  height: 667pt;
+  border: 1px solid rgb(225, 225, 225);
+  position: relative;
+}
+
+.backArrow svg {
+  width: 18.1pt;
+  height: 18.1pt;
+  color: rgb(66 69 83);
+}
+
+.backArrow {
+  padding-left: 10pt;
+  cursor: pointer;
+}
+.collegeBuds {
+  font-size: 14pt;
+  color: rgb(0 0 0);
+  font-weight: 500;
+  padding-left: 105.9pt;
+  padding-right: 122.2pt;
+}
+
+.infoIcon svg {
+  width: 18.1pt;
+  height: 18.1pt;
+  color: rgb(0 0 0);
+}
+
+.infoIcon {
+  padding-right: 5pt;
+}
+
+.weeklySparkHeader {
+  display: flex;
+  padding-bottom: 13.4pt;
+  padding-top: 16pt;
+}
+
+.horizontalLine {
+  border: 1pt solid rgb(233 238 247);
+  margin-bottom: 16pt;
+}
