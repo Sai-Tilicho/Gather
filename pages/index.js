@@ -1,7 +1,9 @@
-import React from 'react';
-
+import React from "react";
+import WeeklySpark from "./weeklySpark";
 export default function Home() {
   return (
-    <div></div>
-  )
+    <div>
+      <WeeklySpark />
+    </div>
+  );
 }
