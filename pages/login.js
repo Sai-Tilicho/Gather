@@ -1,15 +1,15 @@
-import {  useState,useEffect ,useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import {
     signInWithEmailAndPassword,
     onAuthStateChanged
 } from "firebase/auth";
 import { auth } from "@/firebase";
-import { getDatabase, ref ,get,update} from "firebase/database";
+import { getDatabase, ref, get, update } from "firebase/database";
 import { GatherContext } from "./gatherContext";
 import LoginForm from "@/src/components/loginForm";
 function Login() {
 
-    const{loginEmail,loginPassword,setLoginPasswordError,setEmailNotFoundError}=useContext(GatherContext)
+    const { loginEmail, loginPassword, setLoginPasswordError, setEmailNotFoundError } = useContext(GatherContext)
 
     const [loggedInUser, setLoggedInUser] = useState(null);
 
@@ -41,31 +41,31 @@ function Login() {
             }
         }
     };
-    
+
 
     const login = async () => {
         setEmailNotFoundError("");
-        
+
         if (loginPassword === "") {
             setLoginPasswordError("Password is required");
             return;
         } else {
             setLoginPasswordError("");
         }
-    
+
         try {
             if (loginEmail && loginPassword) {
-            const user = await signInWithEmailAndPassword(
-                auth,
-                loginEmail,
-                loginPassword
-            );
-            await updateStatusToTrue(loginEmail);
-            console.log(user);
+                const user = await signInWithEmailAndPassword(
+                    auth,
+                    loginEmail,
+                    loginPassword
+                );
+                await updateStatusToTrue(loginEmail);
+                console.log(user);
             }
         } catch (error) {
             console.log(error.message);
-    
+
             if (error.code === "auth/wrong-password") {
                 setLoginPasswordError("Wrong password");
             } else if (error.code === "auth/user-not-found") {
@@ -73,11 +73,11 @@ function Login() {
             }
         }
     };
-    
+
 
     return (
-        <LoginForm login={login}/>
-  )
+        <LoginForm login={login} />
+    )
 }
 
 export default Login;

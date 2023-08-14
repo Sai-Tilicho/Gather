@@ -41,16 +41,11 @@ body {
   color:rgb(151 151 151);
   font-size: 18pt;
 }
-.ant-input-item-control-input-content {
-  /* border:1pt solid #d9d9d9; */
-  /* z-index: 1; */
-}
+
 .ant-input::placeholder {
     color:rgb(151 151 151);
     font-size: 18pt;
   }
-
-
 
 .ant-input-password {
   margin-bottom: 10px;
