@@ -92,19 +92,21 @@ const DisplayContactsList = () => {
     ))
 
     const scrollToLetter = (scrollToItem) => {
-        if (scrollToItem.scrollToIndex !== -1) {
-            const elementToScroll = document.getElementById(scrollToItem.scrollToIndex);
-            if (elementToScroll) {
-                const containerRect = contactContainerRef.current.getBoundingClientRect();
-                const elementRect = elementToScroll.getBoundingClientRect();
-                const offset = elementRect.top - containerRect.top;
-                contactContainerRef.current.scrollTo({
-                    top: offset,
-                    behavior: 'smooth',
-                });
-            }
+        const container = document.querySelector('.contact_container');
+        const elementToScroll = document.getElementById(scrollToItem.scrollToIndex);
+
+        if (container && elementToScroll) {
+            const containerRect = container.getBoundingClientRect();
+            const elementRect = elementToScroll.getBoundingClientRect();
+            const scrollTop = elementRect.top - containerRect.top + container.scrollTop;
+
+            container.scrollTo({
+                top: scrollTop,
+                behavior: 'smooth',
+            });
         }
     };
+
 
     return (
         <div className='container'>
@@ -136,9 +138,9 @@ const DisplayContactsList = () => {
             <div className='div_details'>
                 <div className='letter_numbers_container'>
                     {scrollItems.map((scrollItem) => (
-                        <p className={scrollItem?.scrollToIndex !== -1 ? 'letters' : 'letters-disabled'} key={scrollItem?.char} onClick={() => scrollToLetter(scrollItem)}>
+                        <div className={scrollItem?.scrollToIndex !== -1 ? 'letters' : 'letters-disabled'} key={scrollItem?.char} onClick={() => scrollToLetter(scrollItem)}>
                             {scrollItem?.char}
-                        </p>
+                        </div>
                     ))}
                 </div>
                 <div className='contact_container' ref={contactContainerRef}>
