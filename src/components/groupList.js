@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, push, set, get,update } from "firebase/database";
+import { getDatabase, ref, push, set, get, update } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
 import { app } from "@/firebase";
+import { SparkContext } from './sparkContentContext';
 
-const group = [{ id: "1", name: "group1" },
-{ id: "2", name: "group2" },
-{ id: "3", name: "group3" },
-{ id: "4", name: "group4" },
-{ id: "5", name: "group5" }]
+const GroupList = () => {
 
-function GroupList() {
-
-    const [sparkData, setSparkData] = useState([]);
     const [groupId, setGroupId] = useState([]);
+    const { combinedContent } = useContext(SparkContext);
 
     useEffect(() => {
         const getData = async () => {
@@ -23,29 +18,26 @@ function GroupList() {
                 const groupId = groupData.val();
                 const userUUIDs = Object.keys(groupId);
                 setGroupId(groupId)
-
-                const sparkdata = await get(ref(db, "sparks/repo/SP-32"));
-                setSparkData(sparkdata.val());
             } catch (error) {
                 console.log("Error:", error);
             }
         };
         getData();
     }, []);
-    
+
     const saveDataToDatabase = async (groupId, content, groupName, status) => {
         const db = getDatabase();
-    
+
         const newConversationId = uuidv4();
         const newConversationRefPath = `conversations/${newConversationId}`;
-    
+
         const conversationData = {
             groupId: groupId,
             groupName: groupName,
             spark: content,
-            status: status, 
+            status: status,
         };
-    
+
         await set(ref(db, newConversationRefPath), conversationData, (error) => {
             if (error) {
                 console.log("Error:", error);
@@ -54,27 +46,31 @@ function GroupList() {
             }
         });
     };
-    
+
     const handleSharing = async (groupId, groupName) => {
-        const content = sparkData.content;
-    
+        const storedData = localStorage.getItem("FilledData");
+        let content = ""
+        if (storedData) {
+            content = storedData;
+        }
+        
         if (content) {
             console.log("groupId", groupId);
             console.log("content", content);
             console.log("group", groupName);
-    
+
             await updateStatusToTrue(groupId);
-    
+
             await saveDataToDatabase(groupId, content, groupName, true);
         } else {
             console.log("Content is undefined. Cannot save conversation data.");
         }
     };
-    
+
     const updateStatusToTrue = async (selectedGroupId) => {
         const db = getDatabase();
         const conversationsRef = ref(db, "conversations");
-    
+
         const snapshot = await get(conversationsRef);
         if (snapshot.exists()) {
             const conversations = snapshot.val();
@@ -89,8 +85,8 @@ function GroupList() {
             }
         }
     };
-    
-    
+
+
     return (
         <div>
             <div>get data</div>

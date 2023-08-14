@@ -14,8 +14,6 @@ export default function FillSparkContent({ content }) {
     .map((part, index) => (part === "____" ? index : null))
     .filter((index) => index !== null);
 
-  // console.log(combinedContent);
-
   const onChange = ({ file, fileList: newFileList }) => {
     const isImage = file.type === "image/jpeg" || file.type === "image/png";
 
@@ -39,7 +37,11 @@ export default function FillSparkContent({ content }) {
     const combinedContentArray = parts.map((part, idx) =>
       part === "____" ? newInputValues[idx] || "___" : part
     );
-    setCombinedContent(combinedContentArray.join(""));
+
+    const combinedContent = combinedContentArray.join("");
+    setCombinedContent(combinedContent);
+
+    localStorage.setItem("FilledData", combinedContent);
 
     const allFilled = requiredInputIndices.every(
       (idx) => newInputValues[idx] && newInputValues[idx].trim() !== ""
@@ -50,7 +52,7 @@ export default function FillSparkContent({ content }) {
   const handleShareClick = () => {
     if (areAllRequiredFilled) {
       console.log("Shared successfully");
-      window.location.href = "nextPage";
+      window.location.href = "group";
     } else {
       message.error("Please fill all required input boxes before sharing.");
     }
@@ -66,9 +68,9 @@ export default function FillSparkContent({ content }) {
               style={{
                 width: inputValues[index]
                   ? `${Math.min(
-                      Math.max(inputValues[index].length * 10, 81),
-                      500 - 40
-                    )}px`
+                    Math.max(inputValues[index].length * 10, 81),
+                    500 - 40
+                  )}px`
                   : "81px",
               }}
               value={inputValues[index] || ""}
