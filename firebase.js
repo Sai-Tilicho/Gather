@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// import { getDatabase } from "firebase/database";
 import { get, getDatabase, ref, set } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
 

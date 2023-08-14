@@ -1,7 +1,10 @@
+import GroupList from '@/src/components/groupList';
 import React from 'react';
 
 export default function Home() {
   return (
-    <div></div>
+    <div>
+     <GroupList/>
+    </div>
   )
 }
