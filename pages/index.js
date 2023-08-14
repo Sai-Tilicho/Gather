@@ -1,5 +1,8 @@
 import React from "react";
-
+import WeeklySpark from "./weeklySpark";
 export default function Home() {
-  return <div></div>;
-}
+  return (
+    <div>
+      <WeeklySpark />
+    </div>
+  );
