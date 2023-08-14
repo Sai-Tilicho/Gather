@@ -1,0 +1,133 @@
+@import "https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900";
+
+* {
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Raleway";
+}
+
+.weeklySpark {
+  width: 375pt;
+  height: 667pt;
+  border: 1px solid rgb(225, 225, 225);
+  position: relative;
+}
+
+.backArrow svg {
+  width: 18.1pt;
+  height: 18.1pt;
+  color: rgb(66 69 83);
+}
+
+.backArrow {
+  padding-left: 10pt;
+  cursor: pointer;
+}
+.collegeBuds {
+  font-size: 17pt;
+  color: rgb(0 0 0);
+  font-weight: 500;
+  padding-left: 105.9pt;
+  padding-right: 112.2pt;
+}
+
+.infoIcon svg {
+  width: 18.1pt;
+  height: 18.1pt;
+  color: rgb(0 0 0);
+}
+
+.infoIcon {
+  padding-right: 5pt;
+}
+
+.weeklySparkHeader {
+  display: flex;
+  padding-bottom: 13.4pt;
+  padding-top: 16pt;
+}
+
+.horizontalLine {
+  border: 1pt solid rgb(233 238 247);
+  margin-bottom: 16pt;
+}
+
+.sparkHeading {
+  font-weight: 600;
+  color: rgb(20 31 77);
+  font-size: 17pt;
+  padding: 0pt 11pt;
+  padding-bottom: 10pt;
+}
+
+.sparkContent {
+  font-size: 17pt;
+  line-height: 36pt;
+  color: rgb(66 69 83);
+  padding: 0pt 11pt;
+}
+
+.spark {
+  border-radius: 4pt;
+  border: 1.3pt solid rgb(249 243 243);
+  margin: 0pt 11pt;
+  box-shadow: 0pt 0pt 2pt rgba(52, 44, 44, 0.56);
+  padding-top: 20pt;
+}
+
+.topRightDesign {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  right: 14px;
+  top: 90px;
+}
+
+.join {
+  background-color: rgb(10 158 136);
+  border-radius: 4pt;
+  border: none;
+  box-shadow: 0pt 2pt 4pt rgba(20, 31, 77, 0.3);
+  width: 324pt;
+  height: 47pt;
+  margin: 25pt 11pt;
+  color: white;
+  font-size: 16pt;
+  letter-spacing: 1.14pt;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.inputBox {
+  width: 81px;
+  height: 26pt;
+  border: 1pt solid rgba(213, 219, 230, 0.6);
+  border-radius: 2pt;
+  outline: none;
+  font-size: 12pt;
+  color: rgb(66 69 83);
+  font-size: 15pt;
+  line-height: 36pt;
+  letter-spacing: 0.5pt;
+}
+
+.addPhoto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(66 69 83);
+  font-size: 12pt;
+  border: 1pt solid rgba(213, 219, 230, 0.6);
+  border-radius: 2pt;
+  width: 98pt;
+  height: 26pt;
+  gap: 5pt;
+  background-color: rgba(233, 238, 247, 0.26);
+}

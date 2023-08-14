@@ -2,6 +2,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { get, getDatabase, ref, set } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyADUOk-Z3iOYLQG1wkujfDD8FtxWBDfZ7A",
@@ -41,8 +43,6 @@ export const getDataFromDb = (path, onSuccess, onError) => {
         }
     })
 }
-
-
 
 
 

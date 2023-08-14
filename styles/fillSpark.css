@@ -1,0 +1,85 @@
+@import "https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900";
+
+* {
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Raleway";
+}
+
+.fillSpark {
+  width: 375pt;
+  height: 667pt;
+  border: 1px solid rgb(225, 225, 225);
+}
+
+.fillSparkHeader {
+  display: flex;
+  align-items: center;
+  padding-bottom: 13.4pt;
+  padding-top: 16pt;
+}
+
+.fill {
+  font-size: 17pt;
+  color: rgb(0 0 0);
+  font-weight: 500;
+  padding-left: 120pt;
+  padding-right: 120pt;
+}
+
+.shareButton {
+  width: 92pt;
+  height: 30pt;
+  border-radius: 4pt;
+  border: none;
+  background-color: rgb(10 158 136);
+  opacity: 50%;
+  font-size: 11pt;
+  letter-spacing: 1pt;
+  color: white;
+  font-weight: 200;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20pt;
+}
+
+.enable {
+  opacity: 100%;
+  cursor: pointer;
+}
+
+.fillSparkContent {
+  font-size: 17pt;
+  line-height: 36pt;
+  color: rgb(66 69 83);
+  margin: 0pt 22pt;
+}
+
+.inputBox:focus {
+  border-color: 1pt solid rgba(213, 179, 175, 0.7);
+  box-shadow: 0pt 0pt 4pt rgba(213, 179, 175, 0.6);
+  font-size: 17pt;
+  font-weight: 500;
+}
+
+.shareButton .enabled {
+  background-color: blue;
+}
+
+.ant-input:focus {
+  border-color: rgba(213, 179, 175, 0.7);
+  box-shadow: 0pt 0pt 4pt rgba(213, 179, 175, 0.6);
+  font-size: 17pt;
+  font-weight: 500;
+  border-inline-end-width: 0px;
+}
