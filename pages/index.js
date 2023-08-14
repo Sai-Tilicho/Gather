@@ -6,3 +6,4 @@ export default function Home() {
       <WeeklySpark />
     </div>
   );
+}

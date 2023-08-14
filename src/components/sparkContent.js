@@ -3,7 +3,6 @@ import { BsCamera } from "react-icons/bs";
 
 export default function SparkContent({ content }) {
   const parts = content.split(/(____|📷)/);
-  console.log(parts);
   return (
     <div>
       {parts.map((part, index) => (

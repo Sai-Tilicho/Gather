@@ -14,6 +14,8 @@ export default function FillSparkContent({ content }) {
     .map((part, index) => (part === "____" ? index : null))
     .filter((index) => index !== null);
 
+  // console.log(combinedContent);
+
   const onChange = ({ file, fileList: newFileList }) => {
     const isImage = file.type === "image/jpeg" || file.type === "image/png";
 
