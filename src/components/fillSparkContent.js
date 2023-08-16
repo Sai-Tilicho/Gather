@@ -2,14 +2,33 @@ import React, { useContext, useState } from "react";
 import { BsCamera } from "react-icons/bs";
 import { Upload, Button, message, Input } from "antd";
 import { SparkContext } from "./sparkContentContext";
+import { useRouter } from "next/router";
+import { storage } from "@/firebase";
+import {
+  uploadBytes,
+  ref as reference,
+  getDownloadURL,
+} from "firebase/storage";
 
 export default function FillSparkContent({ content }) {
+  const { combinedContent, setCombinedContent, fileList, setFileList } =
+    useContext(SparkContext);
+  const [inputValues, setInputValues] = useState([]);
+  const [areAllRequiredFilled, setAreAllRequiredFilled] = useState(false);
+  const router = useRouter();
+
+  // console.log(fileList);
+
+  const handleUpload = () => {
+    const imageRef = reference(storage, `sparkImages/${fileList?.[0]?.name}`);
+    uploadBytes(imageRef, fileList?.[0]?.originFileObj).then(() => {
+      console.log("image uploaded");
+      return;
+    });
+  };
+
   const parts = content.split(/(____|📷)/);
 
-  const [fileList, setFileList] = useState([]);
-  const [inputValues, setInputValues] = useState([]);
-  const { combinedContent, setCombinedContent } = useContext(SparkContext);
-  const [areAllRequiredFilled, setAreAllRequiredFilled] = useState(false);
   const requiredInputIndices = parts
     .map((part, index) => (part === "____" ? index : null))
     .filter((index) => index !== null);
@@ -42,6 +61,7 @@ export default function FillSparkContent({ content }) {
     setCombinedContent(combinedContent);
 
     localStorage.setItem("FilledData", combinedContent);
+    localStorage.setItem("sparkURL", JSON.stringify(fileList));
 
     const allFilled = requiredInputIndices.every(
       (idx) => newInputValues[idx] && newInputValues[idx].trim() !== ""
@@ -50,9 +70,10 @@ export default function FillSparkContent({ content }) {
   };
 
   const handleShareClick = () => {
+    handleUpload();
     if (areAllRequiredFilled) {
       console.log("Shared successfully");
-      window.location.href = "group";
+      router.push({ pathname: "group" });
     } else {
       message.error("Please fill all required input boxes before sharing.");
     }
@@ -68,9 +89,9 @@ export default function FillSparkContent({ content }) {
               style={{
                 width: inputValues[index]
                   ? `${Math.min(
-                    Math.max(inputValues[index].length * 10, 81),
-                    500 - 40
-                  )}px`
+                      Math.max(inputValues[index].length * 10, 81),
+                      500 - 40
+                    )}px`
                   : "81px",
               }}
               value={inputValues[index] || ""}
@@ -82,10 +103,12 @@ export default function FillSparkContent({ content }) {
               listType="picture"
               fileList={fileList}
               onChange={onChange}
-              onRemove={() => setFileList([])}>
+              onRemove={() => setFileList([])}
+            >
               <Button
                 icon={<BsCamera size={18} color="rgb(66 69 83)" />}
-                className="addPhoto">
+                className="addPhoto"
+              >
                 add photo
               </Button>
             </Upload>
@@ -97,7 +120,8 @@ export default function FillSparkContent({ content }) {
       <div className="button">
         <button
           className={`shareButton ${areAllRequiredFilled ? "enable" : ""}`}
-          onClick={handleShareClick}>
+          onClick={handleShareClick}
+        >
           SHARE
         </button>
       </div>

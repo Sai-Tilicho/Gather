@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { RiInformationLine } from "react-icons/ri";
 import { useRouter } from "next/router";
+import { SparkContext } from "./sparkContentContext";
 
 export default function Header() {
+  const { groupName } = useContext(SparkContext);
   const router = useRouter();
   const handleBackPage = () => {
     router.push("/dashboard");
@@ -15,7 +17,7 @@ export default function Header() {
         <div className="backArrow" onClick={handleBackPage}>
           <MdOutlineArrowBackIosNew />
         </div>
-        <p className="groupName">Group Name</p>
+        <p className="groupName">{groupName}</p>
         <div className="info">
           <RiInformationLine />
         </div>
