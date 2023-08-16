@@ -1,0 +1,57 @@
+@import "https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900";
+
+.sparkMsg {
+  font-family: "Raleway";
+  font-size: 15pt;
+  line-height: 30pt;
+  color: rgb(66, 69, 83);
+  padding-left: 63pt;
+  padding-right: 22pt;
+  padding-bottom: 15pt;
+}
+
+.sparkmsgHead {
+  display: flex;
+  align-items: center;
+  gap: 200pt;
+}
+
+.imageSpaekContent {
+  display: flex;
+  gap: 14pt;
+  padding-left: 11pt;
+  padding-top: 11pt;
+}
+
+.sparkImage {
+  padding-left: 63pt;
+}
+
+.sparkAlert {
+  font-weight: 600;
+  color: rgb(20 31 77);
+  font-size: 12pt;
+  display: flex;
+  justify-content: center;
+  padding: 100pt 0pt;
+}
+
+.start {
+  background-color: rgb(10 158 136);
+  border-radius: 4pt;
+  border: none;
+  box-shadow: 0pt 2pt 4pt rgba(20, 31, 77, 0.3);
+  width: 250pt;
+  height: 40pt;
+  color: white;
+  font-size: 16pt;
+  letter-spacing: 1.14pt;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20pt;
+}
+
+.startDiv {
+  display: flex;
+  justify-content: center;
+}

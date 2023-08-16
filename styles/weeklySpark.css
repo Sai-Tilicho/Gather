@@ -48,6 +48,14 @@ body {
   padding-right: 5pt;
 }
 
+.infoIcon .ant-tooltip {
+  max-width: 200px;
+}
+
+.text {
+  color: black;
+}
+
 .weeklySparkHeader {
   display: flex;
   padding-bottom: 13.4pt;

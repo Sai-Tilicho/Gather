@@ -11,8 +11,7 @@ export const SparkContentContext = ({ children }) => {
   const [filledSpark, setFilledSpark] = useState("");
   const [sparkURL, setSparkURL] = useState("");
   const [fileList, setFileList] = useState([]);
-
-
+  const [groupData, setGroupData] = useState(null);
 
   useEffect(() => {
     const dbRef = ref(database);
@@ -21,9 +20,8 @@ export const SparkContentContext = ({ children }) => {
         if (snapshot.exists()) {
           snapshot.forEach((userSnapshot) => {
             const userData = userSnapshot.val();
-            if (userData.status === "true") {
+            if (userData.status === true) {
               setSparkURL(userData.profileImageUrl);
-              return;
             }
           });
         } else {
@@ -68,7 +66,9 @@ export const SparkContentContext = ({ children }) => {
     setFilledSpark,
     fileList,
     setFileList,
-    sparkURL
+    sparkURL,
+    groupData,
+    setGroupData,
   };
 
   return (

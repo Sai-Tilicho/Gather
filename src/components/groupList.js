@@ -2,8 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { getDatabase, ref, set, get, update } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
 import { SparkContext } from "./sparkContentContext";
-import { storage } from "@/firebase"; 
-import { getDownloadURL, ref as reference, uploadBytes } from "firebase/storage";
+import { storage } from "@/firebase";
+import {
+  getDownloadURL,
+  ref as reference,
+  uploadBytes,
+} from "firebase/storage";
+// import GroupContacts from "./groupContacts";
 
 const GroupList = () => {
   const [groupId, setGroupId] = useState([]);
@@ -34,6 +39,8 @@ const GroupList = () => {
     const db = getDatabase();
 
     const newConversationId = uuidv4();
+    console.log("first");
+    console.log(newConversationId);
     const newConversationRefPath = `conversations/${newConversationId}`;
 
     const conversationData = {
@@ -60,18 +67,15 @@ const GroupList = () => {
     }
 
     if (content) {
-      console.log("groupId", groupId);
-      console.log("content", content);
-      console.log("group", groupName);
-
       await updateStatusToTrue(groupId);
 
-      const imageFile = fileList[0].originFileObj;
+      const imageFile = fileList[0]?.originFileObj;
       if (imageFile) {
         const storageRef = reference(
           storage,
-          `conversations/${uuidv4()}/${imageFile.name}`
+          `conversations/groupId/${imageFile.name}`
         );
+
         try {
           const snapshot = await uploadBytes(storageRef, imageFile);
           const imageUrl = await getDownloadURL(snapshot.ref);
@@ -114,14 +118,14 @@ const GroupList = () => {
 
   return (
     <div>
-      {Object.entries(groupId).map(([uuid, groupData], index) => (
+      {/* {Object.entries(groupId).map(([uuid, groupData], index) => (
         <div
           key={index}
-          onClick={() => handleSharing(uuid, groupData.group_name)}
-        >
+          onClick={() => handleSharing(uuid, groupData.group_name)}>
           {groupData.group_name}
         </div>
-      ))}
+      ))} */}
+      {/* <GroupContacts handleSharing={handleSharing} /> */}
     </div>
   );
 };
