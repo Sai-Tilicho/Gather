@@ -71,14 +71,15 @@ body {
   border:1pt solid rgb(0, 157, 255);
   border-radius: 5pt;
 }
-.passwordInp{
+.passwordDiv{
   position: relative;
 }
-.passwordToggle{
+.iconDiv{
   position: absolute;
-  position: fixed;
-  left:750pt;
-  top:410pt;
+  left:270pt;
+  top:20pt;
+}
+.passwordToggle{ 
   color:rgb(167, 164, 164);
 }
 .loginPasswordToggle{

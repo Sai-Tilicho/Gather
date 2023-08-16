@@ -6,7 +6,7 @@ import { GatherContext } from "@/pages/gatherContext";
 function LoginForm({ login }) {
     const [showPassword, setShowPassword] = useState(false);
     const { setLoginEmail, loginPassword, setLoginPassword,
-        loginPasswordError, emailNotFoundError } = useContext(GatherContext)
+        loginPasswordError, emailNotFoundError,setLoginPasswordError } = useContext(GatherContext)
     const onFinish = (values) => {
         console.log('Success:', values);
     };
@@ -14,6 +14,22 @@ function LoginForm({ login }) {
         console.log('Failed:', errorInfo);
 
     };
+    const validatePassword = (password) => {
+        const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
+        return passwordRegex.test(password);
+      };
+    
+      const handlePasswordChange = (e) => {
+        const newPassword = e.target.value;
+        setLoginPassword(e.target.value);
+    
+        if (validatePassword(newPassword)) {
+          setLoginPasswordError('');
+        } else {
+          setLoginPasswordError('Password must contain numbers, letters, and special characters.');
+        }
+      };
+      
     return (
         <div className="signUpMaindiv">
             <div className="heading">Login</div>
@@ -35,6 +51,7 @@ function LoginForm({ login }) {
                                     required: true,
                                     message: 'Email is required!',
                                 },
+            
                             ]}
                         >
                             <Input
@@ -45,25 +62,26 @@ function LoginForm({ login }) {
                         {emailNotFoundError && <p style={{ color: "red" }}>{emailNotFoundError}</p>}
                     </div>
 
-                    <div className="passwordInp">
+                    <div className="passwordDiv">
                         <input
                             type={showPassword ? "text" : "password"}
                             placeholder="Password"
-                            required
                             value={loginPassword}
-                            onChange={(e) => setLoginPassword(e.target.value)}
+                            onChange={handlePasswordChange}
                             className="password"
                         />
                         {showPassword ? (
-                            <EyeTwoTone
-                                className="loginPasswordToggle"
+                           <div className="iconDiv"> <EyeTwoTone
+                                className="passwordToggle"
                                 onClick={() => setShowPassword(false)}
-                            />
+                                size={50}
+                            /></div>
                         ) : (
-                            <EyeInvisibleOutlined
-                                className="loginPasswordToggle"
+                           <div className="iconDiv"> <EyeInvisibleOutlined
+                                className="passwordToggle"
                                 onClick={() => setShowPassword(true)}
-                            />
+                                size={50}
+                            /></div>
                         )}
                         {loginPasswordError && <p style={{ color: "red" }}>{loginPasswordError}</p>}
                     </div>

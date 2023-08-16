@@ -7,7 +7,7 @@ import { GatherContext } from "@/pages/gatherContext";
 function SignUpForm({ register }) {
     const { setRegisterEmail, registerPassword, setRegisterPassword, setRegisteredFirstName,
         setRegisteredLasttName, emailError, passwordError
-        , showPassword, setShowPassword, }
+        , showPassword, setShowPassword,setPasswordError }
         = useContext(GatherContext)
 
     const onFinish = (values) => {
@@ -16,6 +16,27 @@ function SignUpForm({ register }) {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+    const validateLettersOnly = (_, value) => {
+        if (!value || /^[A-Za-z]+$/.test(value)) {
+          return Promise.resolve();
+        }
+        return Promise.reject(new Error('Please input letters only!'));
+      };
+      const validatePassword = (password) => {
+        const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
+        return passwordRegex.test(password);
+      };
+    
+      const handlePasswordChange = (e) => {
+        const newPassword = e.target.value;
+        setRegisterPassword(newPassword);
+    
+        if (validatePassword(newPassword)) {
+          setPasswordError('');
+        } else {
+          setPasswordError('Password must contain numbers, letters, and special characters.');
+        }
+      };
 
     return (
         <div className="signUpMaindiv">
@@ -33,6 +54,9 @@ function SignUpForm({ register }) {
                                     required: true,
                                     message: 'Please input your First Name!',
                                 },
+                                {
+                                    validator: validateLettersOnly,
+                                  },
                             ]}
                         >
                             <Input placeholder="First Name" onChange={(e) => setRegisteredFirstName(e.target.value)} />
@@ -46,6 +70,9 @@ function SignUpForm({ register }) {
                                     required: true,
                                     message: 'Please input your Last Name!',
                                 },
+                                {
+                                    validator: validateLettersOnly,
+                                  },
                             ]}
                         >
                             <Input placeholder="Last Name" onChange={(e) => setRegisteredLasttName(e.target.value)} />
@@ -74,28 +101,27 @@ function SignUpForm({ register }) {
                         {emailError && <p style={{ color: "red" }}>{emailError}</p>}
                     </div>
 
-                    <div>
+                    <div className="passwordDiv">
 
                         <input
                             type={showPassword ? "text" : "password"}
                             placeholder="Password"
-                            required
                             value={registerPassword}
-                            onChange={(e) => setRegisterPassword(e.target.value)}
+                            onChange={handlePasswordChange}
                             className="password"
                         />
                         {showPassword ? (
-                            <EyeTwoTone
+                           <div className="iconDiv"> <EyeTwoTone
                                 className="passwordToggle"
                                 onClick={() => setShowPassword(false)}
                                 size={50}
-                            />
+                            /></div>
                         ) : (
-                            <EyeInvisibleOutlined
+                           <div className="iconDiv"> <EyeInvisibleOutlined
                                 className="passwordToggle"
                                 onClick={() => setShowPassword(true)}
                                 size={50}
-                            />
+                            /></div>
                         )}
                         {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
                     </div>

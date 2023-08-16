@@ -8,13 +8,18 @@ import { getDatabase, ref, set } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
 import { GatherContext } from "./gatherContext";
 import SignUpForm from "@/src/components/signUpForm";
+import { useRouter } from "next/router";
+
+import { Button, message, Space } from 'antd';
 
 function SignUp() {
-    const { registerEmail, registerPassword, registeredFirstName,
+    const { registerEmail, registerPassword, setRegisterPassword, registeredFirstName,
         registeredLasttName, setUser, emailError, setEmailError, passwordError
         , setPasswordError, firstNameError, setFirstNameError, lastNameError, setLastNameError, }
         = useContext(GatherContext)
 
+    const [messageApi, contextHolder] = message.useMessage();
+    const router = useRouter();
     useEffect(() => {
         const auth1 = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
@@ -46,13 +51,12 @@ function SignUp() {
         });
     };
     const register = async () => {
-        console.log(uuidv4())
         setEmailError("");
         setPasswordError("");
         setFirstNameError("");
         setLastNameError("");
 
-        if (!registerEmail.includes("@")) {
+        if (!registerEmail.includes("@") && registerEmail) {
             setEmailError("Invalid email format");
         }
 
@@ -79,18 +83,23 @@ function SignUp() {
                     registerEmail,
                     registerPassword
                 );
-
+                messageApi.open({
+                    type: 'success',
+                    content: 'account created successfully',
+                });
                 await saveDataToDatabase(registeredFirstName, registeredLasttName, registerEmail);
-
-                console.log(user);
-                console.log("inside");
+                router.push("/dashboard");
             } else {
                 console.log("First name and last name are required.");
             }
         } catch (error) {
             console.log("inside", error.message);
             if (error.code === "auth/email-already-in-use") {
-                setEmailError("This email address is already in use.");
+                // setEmailError("This email address is already in use.");
+                messageApi.open({
+                    type: 'error',
+                    content: 'This email address is already in use',
+                });
             } else {
                 setEmailError(error.message);
             }
@@ -98,7 +107,14 @@ function SignUp() {
     };
 
     return (
-        <SignUpForm register={register} />
+        <div>
+
+            <SignUpForm register={register} />
+            <div>
+                {contextHolder}
+               
+            </div>
+        </div>
     )
 }
 
