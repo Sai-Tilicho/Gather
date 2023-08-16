@@ -9,6 +9,7 @@ function LoginForm({ login }) {
         loginPasswordError, emailNotFoundError,setLoginPasswordError } = useContext(GatherContext)
     const onFinish = (values) => {
         console.log('Success:', values);
+        // login();
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);

@@ -77,7 +77,6 @@ function Login() {
             if (error.code === "auth/wrong-password") {
                 setLoginPasswordError("Wrong password");
             } else if (error.code === "auth/user-not-found") {
-                // setEmailNotFoundError("Email not found");
                 messageApi.open({
                     type: 'error',
                     content: 'email doesnot exists',
@@ -86,10 +85,8 @@ function Login() {
         }
     };
 
-
     return (
         <div>
-
             <LoginForm login={login} />
             <div>
                 {contextHolder}

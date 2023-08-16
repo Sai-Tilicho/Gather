@@ -10,8 +10,15 @@ function SignUpForm({ register }) {
         , showPassword, setShowPassword,setPasswordError }
         = useContext(GatherContext)
 
-    const onFinish = (values) => {
+    const onFinish =async (values) => {
         console.log('Success:', values);
+        // if (registerPassword === "") {
+        //     console.log("yes")
+        //     setPasswordError("Password is required");
+        //     return;
+        // }
+
+        // register();
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -89,6 +96,7 @@ function SignUpForm({ register }) {
                                 },
                                 {
                                     required: true,
+                                    // type:"email",
                                     message: 'Email is required!',
                                 },
                             ]}
@@ -108,7 +116,7 @@ function SignUpForm({ register }) {
                             placeholder="Password"
                             value={registerPassword}
                             onChange={handlePasswordChange}
-                            className="password"
+                            className="password" 
                         />
                         {showPassword ? (
                            <div className="iconDiv"> <EyeTwoTone

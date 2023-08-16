@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// import { getDatabase } from "firebase/database";
 import { get, getDatabase, ref, set } from "firebase/database";
 
 const firebaseConfig = {
@@ -17,14 +16,4 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth=getAuth(app);
 export const database = getDatabase(app);
-export const setDataToDb = (path, data, onSuccess, onError) => {
-    set(ref(database, path), data).then(() => {
-        if(onSuccess !== undefined) {
-            onSuccess()
-        }
-    }).catch((error) => {
-        if(onError !== undefined) {
-            onError(error)
-        }
-    });
-}
+

@@ -27,21 +27,18 @@ function SignUp() {
 
         return auth1;
     }, []);
-
-
-    const saveDataToDatabase = async (firstName, lastName, email) => {
+    
+    const saveDataToDatabase = async (firstName, lastName, email, userId) => {
         const db = getDatabase();
-        const usersRef = ref(db, "users");
-        const newUserId = uuidv4();
-        const newUserRefPath = `users/${newUserId}`;
-
+        const newUserRefPath = `users/${userId}`; 
+    
         const userData = {
             firstName: firstName,
             lastName: lastName,
             email: email,
             status: "false"
         };
-
+    
         await set(ref(db, newUserRefPath), userData, (error) => {
             if (error) {
                 console.log("Error:", error);
@@ -50,44 +47,30 @@ function SignUp() {
             }
         });
     };
+    
     const register = async () => {
-        setEmailError("");
-        setPasswordError("");
-        setFirstNameError("");
-        setLastNameError("");
-
-        if (!registerEmail.includes("@") && registerEmail) {
-            setEmailError("Invalid email format");
-        }
-
         if (registerPassword === "") {
-            setPasswordError("Password is required");
-        }
-
-        if (registeredFirstName === "") {
-            setFirstNameError("First Name is required");
-        }
-
-        if (registeredLasttName === "") {
-            setLastNameError("Last Name is required");
-        }
-
-        if (emailError || passwordError || firstNameError || lastNameError) {
-            return;
-        }
-
+                setPasswordError("Password is required");
+                return;
+            }
+            
         try {
             if (registeredFirstName && registeredLasttName) {
-                const user = await createUserWithEmailAndPassword(
+                const userCredential = await createUserWithEmailAndPassword(
                     auth,
                     registerEmail,
                     registerPassword
                 );
+    
+                const userId = userCredential.user.uid; 
+    
+                
                 messageApi.open({
                     type: 'success',
-                    content: 'account created successfully',
+                    content: 'Account created successfully',
                 });
-                await saveDataToDatabase(registeredFirstName, registeredLasttName, registerEmail);
+                await saveDataToDatabase(registeredFirstName, registeredLasttName, registerEmail, userId);
+    
                 router.push("/dashboard");
             } else {
                 console.log("First name and last name are required.");
@@ -95,7 +78,6 @@ function SignUp() {
         } catch (error) {
             console.log("inside", error.message);
             if (error.code === "auth/email-already-in-use") {
-                // setEmailError("This email address is already in use.");
                 messageApi.open({
                     type: 'error',
                     content: 'This email address is already in use',
@@ -108,11 +90,9 @@ function SignUp() {
 
     return (
         <div>
-
             <SignUpForm register={register} />
             <div>
-                {contextHolder}
-               
+                {contextHolder}               
             </div>
         </div>
     )

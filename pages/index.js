@@ -1,11 +1,10 @@
 import React from 'react'
-import SignUp from './signUp'
-import GatherContext from './gatherContext'
+import Login from './login';
 
 export default function Home() {
   return (
     <div>
-      <SignUp />
-    </div>
+      <Login />
+</div>
   )
 }
