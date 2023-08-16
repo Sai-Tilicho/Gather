@@ -9,7 +9,6 @@ import { v4 as uuidv4 } from "uuid";
 import { GatherContext } from "./gatherContext";
 import SignUpForm from "@/src/components/signUpForm";
 import { useRouter } from "next/router";
-
 import { Button, message, Space } from 'antd';
 
 function SignUp() {

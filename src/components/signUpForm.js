@@ -17,7 +17,6 @@ function SignUpForm({ register }) {
         //     setPasswordError("Password is required");
         //     return;
         // }
-
         // register();
     };
     const onFinishFailed = (errorInfo) => {
