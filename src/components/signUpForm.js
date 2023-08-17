@@ -2,22 +2,16 @@ import React, { useContext } from "react";
 import { Button, Form, Input } from 'antd';
 import Link from "next/link";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { GatherContext } from "@/pages/gatherContext";
+import { SparkContext } from "./sparkContentContext";
 
 function SignUpForm({ register }) {
     const { setRegisterEmail, registerPassword, setRegisterPassword, setRegisteredFirstName,
         setRegisteredLasttName, emailError, passwordError
         , showPassword, setShowPassword,setPasswordError }
-        = useContext(GatherContext)
+        = useContext(SparkContext)
 
     const onFinish =async (values) => {
         console.log('Success:', values);
-        // if (registerPassword === "") {
-        //     console.log("yes")
-        //     setPasswordError("Password is required");
-        //     return;
-        // }
-        // register();
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);

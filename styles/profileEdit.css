@@ -84,24 +84,24 @@ body {
   margin-left: 62pt;
 }
 
-.ant-upload-wrapper
+.uploadImg .ant-upload-wrapper
   .ant-upload-list.ant-upload-list-picture-circle
   .ant-upload-list-item {
   border: none;
   padding: 0;
 }
 
-.ant-upload-wrapper.ant-upload-picture-circle-wrapper
+.uploadImg .ant-upload-wrapper.ant-upload-picture-circle-wrapper
   .ant-upload-list.ant-upload-list-picture-circle
   .ant-upload-list-item-container,
-.ant-upload-wrapper.ant-upload-picture-circle-wrapper
+.uploadImg .ant-upload-wrapper.ant-upload-picture-circle-wrapper
   .ant-upload-list.ant-upload-list-picture-circle
   .ant-upload-list-item::before {
   width: 80pt;
   height: 80pt;
 }
 
-.ant-upload-wrapper.ant-upload-picture-circle-wrapper
+.uploadImg .ant-upload-wrapper.ant-upload-picture-circle-wrapper
   .ant-upload.ant-upload-select {
   width: auto !important;
   height: auto !important;
@@ -115,7 +115,7 @@ body {
   font-family: "Raleway";
 }
 
-.ant-upload-list {
+.uploadImg .ant-upload-list {
   display: flex;
   justify-content: center;
   align-items: center;

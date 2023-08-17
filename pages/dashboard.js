@@ -21,6 +21,7 @@ export default function EmptyDashBoard() {
     router.push("/weeklySpark");
   };
 
+
   const firstLetter = firstName.toUpperCase();
   const lastLetter = lastName.toUpperCase();
 

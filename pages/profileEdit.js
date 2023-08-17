@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect ,useContext} from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Form, Input, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ import {
 import { SparkContext } from "@/src/components/sparkContentContext";
 
 const ProfileEdit = () => {
-  const { firstName, lastName, setFirstName, setLastName, imageURL } =
+  const { firstName, lastName, setFirstName, setLastName, imageURL, userData } =
     useContext(SparkContext);
   const [imgChange, setImgChange] = useState([
     {
@@ -44,34 +44,41 @@ const ProfileEdit = () => {
     const db = getDatabase();
     const usersRef = ref(db, "users");
 
-    const snapshot = await get(usersRef);
-    if (snapshot.exists()) {
-      const users = snapshot.val();
-      for (const userId in users) {
-        if (users[userId].status === "true") {
-          const imageFile = imgChange[0].originFileObj;
-          if (imageFile) {
-            const storageRef = reference(
-              storage,
-              `images/${userId}/${imageFile.name}`
-            );
-            const uploadTask = uploadBytes(storageRef, imageFile);
-            await uploadTask;
+    let credentials = localStorage.getItem("userCredentials");
+    const parseCredentials = JSON.parse(credentials);
 
-            const imageUrl = await getDownloadURL(storageRef);
+    console.log(credentials);
+    if (credentials) {
+      const snapshot = await get(usersRef);
+      if (snapshot.exists()) {
+        const users = snapshot.val();
+        const ids = Object.keys(users);
+        for (const userId of ids) {
+          if (parseCredentials.user.uid == userId) {
+            const imageFile = imgChange[0].originFileObj;
+            if (imageFile) {
+              const storageRef = reference(
+                storage,
+                `images/${userId}/${imageFile.name}`
+              );
+              const uploadTask = uploadBytes(storageRef, imageFile);
+              await uploadTask;
 
-            await update(ref(db, `users/${userId}`), {
-              firstName: firstName,
-              lastName: lastName,
-              profileImageUrl: imageUrl,
-            });
-          } else {
-            await update(ref(db, `users/${userId}`), {
-              firstName: firstName,
-              lastName: lastName,
-            });
+              const imageUrl = await getDownloadURL(storageRef);
+
+              await update(ref(db, `users/${userId}`), {
+                firstName: firstName,
+                lastName: lastName,
+                profileImageUrl: imageUrl,
+              });
+            } else {
+              await update(ref(db, `users/${userId}`), {
+                firstName: firstName,
+                lastName: lastName,
+              });
+            }
+            break;
           }
-          break;
         }
       }
     }

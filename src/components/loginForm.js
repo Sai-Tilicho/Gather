@@ -2,14 +2,14 @@ import { useState, useContext } from "react";
 import { Button, Form, Input } from 'antd';
 import Link from "next/link";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { GatherContext } from "@/pages/gatherContext";
+import { SparkContext } from "./sparkContentContext";
+
 function LoginForm({ login }) {
     const [showPassword, setShowPassword] = useState(false);
     const { setLoginEmail, loginPassword, setLoginPassword,
-        loginPasswordError, emailNotFoundError,setLoginPasswordError } = useContext(GatherContext)
+        loginPasswordError, emailNotFoundError,setLoginPasswordError } = useContext(SparkContext)
     const onFinish = (values) => {
         console.log('Success:', values);
-        // login();
 
     };
     const onFinishFailed = (errorInfo) => {

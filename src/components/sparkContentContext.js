@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { getDatabase, ref, child, get, onValue } from "firebase/database";
+import { ref, child, get, onValue } from "firebase/database";
 import { database } from "@/firebase";
 
 export const SparkContext = createContext();
@@ -15,26 +15,49 @@ export const SparkContentContext = ({ children }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [imageURL, setImageURL] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [registeredFirstName, setRegisteredFirstName] = useState("");
+  const [registeredLasttName, setRegisteredLasttName] = useState("");
+  const [user, setUser] = useState();
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [loginPasswordError, setLoginPasswordError] = useState("");
+  const [emailNotFoundError, setEmailNotFoundError] = useState("");
 
   useEffect(() => {
-    const dbRef = ref(database);
+    let credentials = localStorage.getItem("userCredentials");
+    const parseCredentials = JSON.parse(credentials);
+    if (credentials) {
+      const starCountRef = ref(database, "users");
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+        const ids = Object.keys(data);
 
-    const starCountRef = ref(database, "users");
-    onValue(starCountRef, (snapshot) => {
-      const data = snapshot.val();
-      if (!!data) {
-        Object.values(data).forEach((userData) => {
-          if (userData.status === "true") {
-            setFirstName(userData.firstName);
-            setLastName(userData.lastName);
-            setImageURL(userData.profileImageUrl);
+        if (snapshot.exists()) {
+          for (const userId of ids) {
+            console.log("object");
+            console.log(userId);
+            if (parseCredentials.user.uid == userId) {
+              console.log("zxcvbn");
+
+              const userData = data[userId];
+              setFirstName(userData.firstName);
+              setLastName(userData.lastName);
+              setImageURL(userData.profileImageUrl);
+            }
           }
-        });
-      } else {
-        console.log("No data available");
-      }
-    });
+        }
+      });
+    }
   }, []);
+
+  console.log(firstName);
 
   useEffect(() => {
     const dbRef = ref(database);
@@ -77,6 +100,34 @@ export const SparkContentContext = ({ children }) => {
     setFirstName,
     setLastName,
     imageURL,
+    registerEmail,
+    setRegisterEmail,
+    registerPassword,
+    setRegisterPassword,
+    registeredFirstName,
+    setRegisteredFirstName,
+    registeredLasttName,
+    setRegisteredLasttName,
+    user,
+    setUser,
+    emailError,
+    setEmailError,
+    passwordError,
+    setPasswordError,
+    firstNameError,
+    setFirstNameError,
+    lastNameError,
+    setLastNameError,
+    showPassword,
+    setShowPassword,
+    loginEmail,
+    setLoginEmail,
+    loginPassword,
+    setLoginPassword,
+    loginPasswordError,
+    setLoginPasswordError,
+    emailNotFoundError,
+    setEmailNotFoundError,
   };
 
   return (
