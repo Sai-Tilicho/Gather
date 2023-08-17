@@ -12,7 +12,7 @@ import {
 import { SparkContext } from "@/src/components/sparkContentContext";
 
 const ProfileEdit = () => {
-  const { firstName, lastName, setFirstName, setLastName, imageURL, userData } =
+  const { firstName, lastName, setFirstName, setLastName, imageURL } =
     useContext(SparkContext);
   const [imgChange, setImgChange] = useState([
     {
@@ -34,7 +34,6 @@ const ProfileEdit = () => {
 
   const handleRouteDashboard = async () => {
     await updateFirstAndLastName(firstName, lastName);
-
     router.push("/dashboard");
   };
 
@@ -46,8 +45,6 @@ const ProfileEdit = () => {
 
     let credentials = localStorage.getItem("userCredentials");
     const parseCredentials = JSON.parse(credentials);
-
-    console.log(credentials);
     if (credentials) {
       const snapshot = await get(usersRef);
       if (snapshot.exists()) {

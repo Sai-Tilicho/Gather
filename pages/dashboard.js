@@ -21,7 +21,6 @@ export default function EmptyDashBoard() {
     router.push("/weeklySpark");
   };
 
-
   const firstLetter = firstName.toUpperCase();
   const lastLetter = lastName.toUpperCase();
 
@@ -33,7 +32,7 @@ export default function EmptyDashBoard() {
       </div>
     </div>
   );
-    
+
   return (
     <div className="emptyContactsMainPage">
       <div className="emptyContactHeader">

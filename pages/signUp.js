@@ -20,6 +20,7 @@ function SignUp() {
     setUser,
     setEmailError,
     setPasswordError,
+    setLogin,
   } = useContext(SparkContext);
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -82,7 +83,7 @@ function SignUp() {
           registerEmail,
           userId
         );
-
+        setLogin(true);
         router.push("/dashboard");
       } else {
         console.log("First name and last name are required.");

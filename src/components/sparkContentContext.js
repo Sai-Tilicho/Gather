@@ -29,11 +29,13 @@ export const SparkContentContext = ({ children }) => {
   const [loginPassword, setLoginPassword] = useState("");
   const [loginPasswordError, setLoginPasswordError] = useState("");
   const [emailNotFoundError, setEmailNotFoundError] = useState("");
+  const [isLogin, setLogin] = useState(false);
 
   useEffect(() => {
     let credentials = localStorage.getItem("userCredentials");
     const parseCredentials = JSON.parse(credentials);
-    if (credentials) {
+    console.log(isLogin);
+    if (credentials && isLogin) {
       const starCountRef = ref(database, "users");
       onValue(starCountRef, (snapshot) => {
         const data = snapshot.val();
@@ -41,11 +43,7 @@ export const SparkContentContext = ({ children }) => {
 
         if (snapshot.exists()) {
           for (const userId of ids) {
-            console.log("object");
-            console.log(userId);
             if (parseCredentials.user.uid == userId) {
-              console.log("zxcvbn");
-
               const userData = data[userId];
               setFirstName(userData.firstName);
               setLastName(userData.lastName);
@@ -55,11 +53,14 @@ export const SparkContentContext = ({ children }) => {
         }
       });
     }
-  }, []);
+  }, [isLogin]);
 
-  console.log(firstName);
+  console.log(imageURL);
+
+  console.log({ firstName });
 
   useEffect(() => {
+    setLogin(true);
     const dbRef = ref(database);
     get(child(dbRef, `/conversations`))
       .then((snapshot) => {
@@ -128,6 +129,8 @@ export const SparkContentContext = ({ children }) => {
     setLoginPasswordError,
     emailNotFoundError,
     setEmailNotFoundError,
+    isLogin,
+    setLogin,
   };
 
   return (

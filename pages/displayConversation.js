@@ -13,6 +13,7 @@ export default function DisplayConversation() {
     imageURL,
     firstName,
     lastName,
+    setLogin,
   } = useContext(SparkContext);
 
   const splitSpark = filledSpark.split("📷");
@@ -29,6 +30,8 @@ export default function DisplayConversation() {
       setMessageTimestamp(new Date(sparkContent.timestamp));
     }
   }, [sparkContent]);
+
+  console.log(imageURL);
 
   const handleStart = () => {
     router.push("weeklySpark");
