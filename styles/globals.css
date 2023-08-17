@@ -1,3 +1,4 @@
+
 @import "./fillSpark.css";
 @import "./weeklySpark.css";
 @import "./conversationHeader.css";
@@ -50,3 +51,7 @@
   gap: 20px;
   align-items: flex-start;
 }
+
+@import "./profileEdit.css";
+@import "./dashboard.css";
+
