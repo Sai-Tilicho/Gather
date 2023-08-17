@@ -1,3 +1,4 @@
+
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Quicksand:wght@300;400;500;700&family=Raleway&display=swap");
 @import "./signUpAndLogin.css";
 @import "./fillSpark.css";
@@ -6,3 +7,10 @@
 @import "./displayConversation.css";
 @import "./profileEdit.css";
 @import "./dashboard.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;1,100;1,200;1,300&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import "./createGroup.css";
+@import "./createContacts.css";
+@import './displayContactsList.css';
+@import "./groupContacts.css"
+
