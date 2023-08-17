@@ -1,6 +1,7 @@
 import { database } from '@/firbase';
 import React from 'react';
 import { getDatabase, ref, child, get } from "firebase/database";
+import CreateGroup from './createGroup';
 
 export default function Home() {
 
@@ -15,6 +16,8 @@ export default function Home() {
     console.error(error);
   });
   return (
-    <div></div>
+    <div>
+      <CreateGroup/>
+    </div>
   )
 }
