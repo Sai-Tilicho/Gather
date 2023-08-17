@@ -1,23 +1,12 @@
-import { database } from '@/firbase';
+import CreateContacts from '@/pages/createContacts';
 import React from 'react';
 import { getDatabase, ref, child, get } from "firebase/database";
 import CreateGroup from './createGroup';
-
 export default function Home() {
-
-  const dbRef = ref(database);
-  get(child(dbRef, `/`)).then((snapshot) => {
-    if (snapshot.exists()) {
-      console.log(snapshot.val());
-    } else {
-      console.log("No data available");
-    }
-  }).catch((error) => {
-    console.error(error);
-  });
   return (
     <div>
       <CreateGroup/>
+      <CreateContacts/>
     </div>
   )
 }
