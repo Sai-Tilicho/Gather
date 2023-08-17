@@ -16,13 +16,14 @@ const Context = ({ children }) => {
     const [loginPassword, setLoginPassword] = useState("");
     const [loginPasswordError, setLoginPasswordError] = useState("");
     const [emailNotFoundError, setEmailNotFoundError] = useState("");
+    const [userData,setUserData]=useState([]);
     const contextValue = {
         registerEmail, setRegisterEmail, registerPassword, setRegisterPassword, registeredFirstName, setRegisteredFirstName,
         registeredLasttName, setRegisteredLasttName, user, setUser,
         emailError, setEmailError, passwordError
         , setPasswordError, firstNameError, setFirstNameError, lastNameError, setLastNameError, showPassword, setShowPassword,
         loginEmail, setLoginEmail, loginPassword, setLoginPassword,
-        loginPasswordError, setLoginPasswordError, emailNotFoundError, setEmailNotFoundError
+        loginPasswordError, setLoginPasswordError, emailNotFoundError, setEmailNotFoundError,userData,setUserData
     }
 
 
