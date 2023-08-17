@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { get, getDatabase, ref, set } from "firebase/database";
-import {getStorage} from "firebase/storage"
+import { getStorage } from "firebase/storage"
 
 const firebaseConfig = {
     apiKey: "AIzaSyADUOk-Z3iOYLQG1wkujfDD8FtxWBDfZ7A",
@@ -20,11 +20,11 @@ export const storage = getStorage(app)
 
 export const setDataToDb = (path, data, onSuccess, onError) => {
     set(ref(database, path), data).then(() => {
-        if(onSuccess !== undefined) {
+        if (onSuccess !== undefined) {
             onSuccess()
         }
     }).catch((error) => {
-        if(onError !== undefined) {
+        if (onError !== undefined) {
             onError(error)
         }
     });
@@ -32,15 +32,12 @@ export const setDataToDb = (path, data, onSuccess, onError) => {
 
 export const getDataFromDb = (path, onSuccess, onError) => {
     get(ref(database, path)).then((data) => {
-        if(onSuccess !== undefined) {
+        if (onSuccess !== undefined) {
             onSuccess(data.val())
         }
     }).catch((error) => {
-        if(onError !== undefined) {
+        if (onError !== undefined) {
             onError(error)
         }
     })
 }
-
-}
-
