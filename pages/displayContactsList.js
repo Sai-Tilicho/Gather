@@ -1,19 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
-import { database } from '../../firbase';
+import { database } from '../firbase';
 import React, { useState, useEffect, useRef } from 'react';
-import { getDatabase, ref, child, get } from "firebase/database";
+import { getDatabase, ref, child, get, set } from "firebase/database";
 import _ from 'lodash';
 import Link from 'next/link';
-import { Empty, Tooltip } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
+import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import Router from 'next/router';
 
-const DisplayContactsList = () => {
-    const [contactsData, setcontactsData] = useState([]);
+const DisplayContactsListComp = () => {
+    const [contactsData, setContactsData] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCount, setSelectedCount] = useState(0);
     const [isAnyContactSelected, setIsAnyContactSelected] = useState(false);
     const [selectedLetterNumber, setSelectedLetterNumber] = useState(null);
+    const [findTrue, setFindTrue] = useState();
+    const [checkedContacts, setCheckedContacts] = useState({});
 
     const contactContainerRef = useRef(null);
 
@@ -22,21 +24,31 @@ const DisplayContactsList = () => {
 
     useEffect(() => {
         const dbRef = ref(database);
-        get(child(dbRef, `/userContactNumbers/Naidu`))
+        get(child(dbRef, `/users`))
             .then(async (snapshot) => {
                 if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    const contactIDs = Object.keys(data);
+                    let data = snapshot.val();
+                    let contactIds = Object.keys(data).filter((userId) => {
+                        return data[userId].status === "true";
+                    });
 
-                    const contactDataPromises = contactIDs.map(async (contactID) => {
-                        const contactSnapshot = await get(child(dbRef, `/userContactNumbers/Naidu/${contactID}`));
+                    setFindTrue(contactIds)
+                    const nestedContactId = await get(child(dbRef, `/userContactNumbers/${contactIds}`)).then(async (snapshot) => {
+                        if (snapshot.exists()) {
+                            let data = snapshot.val();
+                            return (Object.keys(data))
+                        }
+                    })
+
+                    const contactDataPromises = nestedContactId.map(async (contactID) => {
+                        const contactSnapshot = await get(child(dbRef, `/userContactNumbers/${contactIds}/${contactID}`));
                         return contactSnapshot.exists() ? { id: contactID, ...contactSnapshot.val() } : null;
                     });
 
                     Promise.all(contactDataPromises)
                         .then((contactDataArray) => {
-                            const validContactData = contactDataArray.filter((contactData) => contactData !== null);
-                            setcontactsData(validContactData);
+                            let validContactData = contactDataArray.filter((contactData) => contactData !== null);
+                            setContactsData(validContactData);
                         })
                         .catch((error) => {
                             console.error(error);
@@ -56,11 +68,19 @@ const DisplayContactsList = () => {
         setIsAnyContactSelected(selected > 0);
     }, [contactsData]);
 
-    const handleCheckboxChange = (event, contactID) => {
-        const updatedcontactsData = contactsData.map(contactData =>
-            contactData.id === contactID ? { ...contactData, isSelected: event.target.checked } : contactData
-        );
-        setcontactsData(updatedcontactsData);
+    const handleCheckboxChange = async (event, contactID) => {
+        const updatedCheckedContacts = {
+            ...checkedContacts,
+            [contactID]: event.target.checked,
+        };
+        setCheckedContacts(updatedCheckedContacts);
+
+        try {
+            const dbRef = ref(database);
+            await set(child(dbRef, `/userContactNumbers/${findTrue}/${contactID}/status`), event.target.checked ? "true" : "false");
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const handleSearch = (event) => {
@@ -77,7 +97,6 @@ const DisplayContactsList = () => {
         if (selectedLetterNumber !== null) {
             return contactNameLowerCase.startsWith(selectedLetterNumber.toLowerCase());
         }
-
         const searchQueryLowerCase = searchQuery.toLowerCase();
         return contactNameLowerCase.includes(searchQueryLowerCase);
     });
@@ -118,7 +137,9 @@ const DisplayContactsList = () => {
 
                     <div className='add_partici_container'>
                         <p className='Add_partici'>Add Participants</p>
-                        <p className='count'> {selectedCount} / {contactsData.length}</p>
+                        <p className='count'>
+                            {Object.keys(checkedContacts).filter(id => checkedContacts[id]).length}  /
+                            {contactsData.length}</p>
                     </div>
 
                     {isAnyContactSelected ?
@@ -148,14 +169,6 @@ const DisplayContactsList = () => {
 
             <div className='div_details'>
 
-                <div className='letter_numbers_container'>
-                    {scrollItems.map((scrollItem) => (
-                        <div className={scrollItem?.scrollToIndex !== -1 ? 'letters' : 'letters-disabled'} key={scrollItem?.char} onClick={() => scrollToLetter(scrollItem)}>
-                            {scrollItem?.char}
-                        </div>
-                    ))}
-                </div>
-
                 <div className='contact_container' ref={contactContainerRef}>
 
                     {sortedContacts?.length > 0 ? (
@@ -166,7 +179,9 @@ const DisplayContactsList = () => {
                                 <div className='contact_container_div' key={index}>
 
                                     <div className='avatar_container'>
-                                        <img className='avatar' src={contactData?.avatar_url} alt='' width={25} height={25} />
+                                        <img className='avatar'
+                                            src={contactData ? contactData?.avatar_url : '/assets/profile.png'}
+                                            alt='' width={25} height={25} />
                                     </div>
 
                                     <div className='contact_details'>
@@ -178,16 +193,31 @@ const DisplayContactsList = () => {
 
                                 </div>
 
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" onChange={(event) => handleCheckboxChange(event, contactData.id)} />
-                                    <span class="checkbox-style"></span>
+                                <label className="custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedContacts[contactData.id] || false} // Check the correct contact's checked status
+                                        onChange={(event) => handleCheckboxChange(event, contactData.id)}
+                                    />
+                                    <span className="checkbox-style"></span>
                                 </label>
 
                             </div>
                         ))) : (
 
-                        <Empty />
+                        <div className='no_data' onClick={() => Router.push('/createContacts')}>
+                            <p className='contacts_not_available'>No contacts available here...</p>
+                            <PlusOutlined className='plus_icon' />
+                        </div>
                     )}
+                </div>
+
+                <div className='letter_numbers_container'>
+                    {contactsData.length > 0 && scrollItems?.map((scrollItem) => (
+                        <div className={scrollItem?.scrollToIndex !== -1 ? 'letters' : 'letters-disabled'} key={scrollItem?.char} onClick={() => scrollToLetter(scrollItem)}>
+                            {scrollItem?.char}
+                        </div>
+                    ))}
                 </div>
 
             </div>
@@ -196,4 +226,4 @@ const DisplayContactsList = () => {
     );
 }
 
-export default DisplayContactsList;
+export default DisplayContactsListComp;
