@@ -1,57 +1,56 @@
 .groupDataContainer {
-    width: 375pt;
-    display: flex;
-    align-items: center;
-    margin: auto;
-    justify-content: center;
+  width: 375pt;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+  margin-top: 5pt;
 }
 .card {
-    width: 370pt;
-    height: max-content;
-    border-bottom: 3px solid rgb(207, 203, 203);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 20pt;
-
+  width: 370pt;
+  height: max-content;
+  border-bottom: 3px solid rgb(207, 203, 203);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20pt;
 }
 .grpContactTitle {
-    font-family: "Raleway-SemiBold";
+  font-family: "Raleway-SemiBold";
 
-    font-size: 16pt;
-    letter-spacing: 1pt;
-    color: rgb(19, 23, 69);
+  font-size: 16pt;
+  letter-spacing: 1pt;
+  color: rgb(19, 23, 69);
 }
-.grpContactsDescription{
-    width: 150pt;
+.grpContactsDescription {
+  width: 150pt;
 
-    font-family: "Raleway-Regular";
-    font-size: 13pt;
-    letter-spacing: 1pt;
-    color: rgb(19, 23, 69);
-    opacity: 50%;
+  font-family: "Raleway-Regular";
+  font-size: 13pt;
+  letter-spacing: 1pt;
+  color: rgb(19, 23, 69);
+  opacity: 50%;
 }
-.grpDate_Time{
-    font-family: "Raleway-Regular";
-    font-size: 13pt;
-    letter-spacing: 1pt;
-    color: rgb(19, 23, 69);
-    opacity: 50%;
+.grpDate_Time {
+  font-family: "Raleway-Regular";
+  font-size: 13pt;
+  letter-spacing: 1pt;
+  color: rgb(19, 23, 69);
+  opacity: 50%;
 }
-.groupContactScreenImg{
-    width:40pt;
-    height: 40pt;
-    border-radius: 50%;
-    margin-left: 10pt;
+.groupContactScreenImg {
+  width: 40pt;
+  height: 40pt;
+  border-radius: 50%;
+  margin-left: 10pt;
 }
-.grpContactTitleDiv{
-    width: 180pt;
-    overflow: hidden;
-    height: max-content;
-    flex-wrap: wrap;
-    display: flex;
-    flex-direction: column;
-    margin-right: 30pt;
-    padding: 10pt;
-
+.grpContactTitleDiv {
+  width: 180pt;
+  overflow: hidden;
+  height: max-content;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  margin-right: 30pt;
+  padding: 10pt;
 }

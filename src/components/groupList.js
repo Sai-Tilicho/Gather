@@ -8,12 +8,13 @@ import {
   ref as reference,
   uploadBytes,
 } from "firebase/storage";
-// import GroupContacts from "./groupContacts";
+import GroupContacts from "./groupContacts";
+import { useRouter } from "next/router";
 
 const GroupList = () => {
   const [groupId, setGroupId] = useState([]);
   const { combinedContent, fileList } = useContext(SparkContext);
-
+  const router = useRouter();
   useEffect(() => {
     const getData = async () => {
       const db = getDatabase();
@@ -39,8 +40,6 @@ const GroupList = () => {
     const db = getDatabase();
 
     const newConversationId = uuidv4();
-    console.log("first");
-    console.log(newConversationId);
     const newConversationRefPath = `conversations/${newConversationId}`;
 
     const conversationData = {
@@ -75,10 +74,10 @@ const GroupList = () => {
           storage,
           `conversations/groupId/${imageFile.name}`
         );
-
         try {
           const snapshot = await uploadBytes(storageRef, imageFile);
           const imageUrl = await getDownloadURL(snapshot.ref);
+          router.push("/displayConversation");
           await saveDataToDatabase(groupId, content, groupName, true, imageUrl);
         } catch (error) {
           console.log("Error uploading image:", error);
@@ -118,14 +117,7 @@ const GroupList = () => {
 
   return (
     <div>
-      {Object.entries(groupId).map(([uuid, groupData], index) => (
-        <div
-          key={index}
-          onClick={() => handleSharing(uuid, groupData.group_name)}>
-          {groupData.group_name}
-        </div>
-      ))}
-      {/* <GroupContacts handleSharing={handleSharing} /> */}
+      <GroupContacts handleSharing={handleSharing} />
     </div>
   );
 };

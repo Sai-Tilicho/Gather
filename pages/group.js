@@ -1,12 +1,12 @@
-import GroupList from '@/src/components/groupList'
-import React from 'react'
+import GroupList from "@/src/components/groupList";
+import React from "react";
 
 function Group() {
   return (
     <div>
-      <GroupList/>
+      <GroupList />
     </div>
-  )
+  );
 }
 
-export default Group
+export default Group;

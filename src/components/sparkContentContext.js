@@ -34,13 +34,11 @@ export const SparkContentContext = ({ children }) => {
   useEffect(() => {
     let credentials = localStorage.getItem("userCredentials");
     const parseCredentials = JSON.parse(credentials);
-    console.log(isLogin);
     if (credentials && isLogin) {
       const starCountRef = ref(database, "users");
       onValue(starCountRef, (snapshot) => {
         const data = snapshot.val();
         const ids = Object.keys(data);
-
         if (snapshot.exists()) {
           for (const userId of ids) {
             if (parseCredentials.user.uid == userId) {
@@ -54,10 +52,6 @@ export const SparkContentContext = ({ children }) => {
       });
     }
   }, [isLogin]);
-
-  console.log(imageURL);
-
-  console.log({ firstName });
 
   useEffect(() => {
     setLogin(true);

@@ -17,7 +17,6 @@ export default function FillSparkContent({ content }) {
   const [areAllRequiredFilled, setAreAllRequiredFilled] = useState(false);
   const router = useRouter();
 
-
   const handleUpload = () => {
     const imageRef = reference(storage, `sparkImages/${fileList?.[0]?.name}`);
     uploadBytes(imageRef, fileList?.[0]?.originFileObj).then(() => {

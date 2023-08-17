@@ -1,7 +1,7 @@
 import React from "react";
 import { BsCamera } from "react-icons/bs";
 
-export default function SparkContent({ content }) {
+export default function SparkContent({ content, test }) {
   const parts = content.split(/(____|📷)/);
   return (
     <div>
