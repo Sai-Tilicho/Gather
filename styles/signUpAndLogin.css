@@ -1,0 +1,115 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Raleway";
+}
+.signUpMaindiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 375pt;
+  height:667pt;
+  margin: auto;
+  /* background-color: #0633a4; */
+  /* color:white; */
+  border: 1pt solid rgb(151 151 151);
+  border-radius: 20px;
+}
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heading {
+  text-align: center;
+  padding: 30pt 0pt;
+  font-size: 22pt;
+  letter-spacing: 0.25pt;
+  /* color:white; */
+}
+.ant-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300pt;
+  height: 50pt;
+  font-size: 18pt;
+  color:rgb(151 151 151);
+  font-size: 18pt;
+}
+
+.ant-input::placeholder {
+    color:rgb(151 151 151);
+    font-size: 18pt;
+  }
+
+.ant-input-password {
+  margin-bottom: 10px;
+}
+
+.password {
+  width: 300pt;
+  height: 50pt;
+  border: 1pt solid #d9d9d9;
+  color:rgb(167, 164, 164);
+  border:1pt solid rgb(224, 220, 220);
+  font-size: 18pt;
+  border-radius: 5pt;
+  outline: none;
+  padding-left: 10pt;
+}
+.password::placeholder{
+  color:rgb(167, 164, 164);
+  font-size: 18pt;
+  /* padding-left: 10pt; */
+}
+.password:hover{
+  border:1pt solid rgb(0, 157, 255);
+  border-radius: 5pt;
+}
+.passwordDiv{
+  position: relative;
+}
+.iconDiv{
+  position: absolute;
+  left:270pt;
+  top:20pt;
+}
+.passwordToggle{ 
+  color:rgb(167, 164, 164);
+}
+.loginPasswordToggle{
+  position: absolute;
+  position: fixed;
+  left:750pt;
+  top:340pt;
+  color:rgb(167, 164, 164);
+}
+.formDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.switchToLogin {
+  text-align: center;
+  margin-bottom: 20pt;
+  font-size: 18pt;
+}
+.switch{
+    text-decoration: none;
+    font-size: 18pt;
+    color:blue;
+}
+.ant-btn {
+  width: 100pt;
+  height: 40pt;
+  border-radius: 20px;
+  border: 3pt solid white;
+font-size: 18pt;
+  margin-top: 30pt;
+}

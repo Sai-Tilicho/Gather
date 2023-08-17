@@ -1,5 +1,16 @@
+
+import '@/styles/globals.css' 
+import GatherContext from './gatherContext'
+import Context from './gatherContext'
 import { SparkContentContext } from "@/src/components/sparkContentContext";
-import "@/styles/globals.css";
+
+export default function App({ Component, pageProps }) {
+
+return (    
+<Context>
+     <Component {...pageProps} />
+  </Context>)
+}
 
 export default function App({ Component, pageProps }) {
   return (
@@ -8,3 +19,4 @@ export default function App({ Component, pageProps }) {
     </SparkContentContext>
   );
 }
+
