@@ -118,13 +118,13 @@ const GroupList = () => {
 
   return (
     <div>
-      {/* {Object.entries(groupId).map(([uuid, groupData], index) => (
+      {Object.entries(groupId).map(([uuid, groupData], index) => (
         <div
           key={index}
           onClick={() => handleSharing(uuid, groupData.group_name)}>
           {groupData.group_name}
         </div>
-      ))} */}
+      ))}
       {/* <GroupContacts handleSharing={handleSharing} /> */}
     </div>
   );

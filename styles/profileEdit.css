@@ -56,13 +56,13 @@ body {
   caret-color: rgb(151 151 151);
 }
 
-.ant-input {
+.inputFields .ant-input {
   font-size: 18pt;
   padding: 0;
   color: rgb(225, 225, 225);
 }
 
-.ant-input::placeholder {
+.inputFields .ant-input::placeholder {
   color: rgb(151 151 151);
 }
 

@@ -17,7 +17,6 @@ export default function FillSparkContent({ content }) {
   const [areAllRequiredFilled, setAreAllRequiredFilled] = useState(false);
   const router = useRouter();
 
-  // console.log(fileList);
 
   const handleUpload = () => {
     const imageRef = reference(storage, `sparkImages/${fileList?.[0]?.name}`);
@@ -107,7 +106,7 @@ export default function FillSparkContent({ content }) {
             >
               <Button
                 icon={<BsCamera size={18} color="rgb(66 69 83)" />}
-                className="addPhoto"
+                className="Photo"
               >
                 add photo
               </Button>

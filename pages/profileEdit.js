@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect ,useContext} from "react";
 import { Form, Input, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
 import { useRouter } from "next/router";
-import { useUser } from "./dashboardContext";
 import { getDatabase, ref, get, update } from "firebase/database";
 import { storage } from "@/firebase";
 import {
@@ -10,10 +9,11 @@ import {
   ref as reference,
   getDownloadURL,
 } from "firebase/storage";
+import { SparkContext } from "@/src/components/sparkContentContext";
 
 const ProfileEdit = () => {
-  const { firstName, lastName, setFirstName, setLastName, imageURL, } =
-    useUser();
+  const { firstName, lastName, setFirstName, setLastName, imageURL } =
+    useContext(SparkContext);
   const [imgChange, setImgChange] = useState([
     {
       name: "image.png",
@@ -32,12 +32,12 @@ const ProfileEdit = () => {
     inputRef.current.focus();
   }, []);
 
-  const handleRouteDashboard = async() => {
+  const handleRouteDashboard = async () => {
     await updateFirstAndLastName(firstName, lastName);
-   
+
     router.push("/dashboard");
   };
-  
+
   const isFormComplete = firstName && lastName;
 
   const updateFirstAndLastName = async (firstName, lastName) => {

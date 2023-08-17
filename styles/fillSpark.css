@@ -76,7 +76,7 @@ body {
   background-color: blue;
 }
 
-.ant-input:focus {
+.inputBox .ant-input:focus {
   border-color: rgba(213, 179, 175, 0.7);
   box-shadow: 0pt 0pt 4pt rgba(213, 179, 175, 0.6);
   font-size: 17pt;

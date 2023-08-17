@@ -126,7 +126,7 @@ body {
   letter-spacing: 0.5pt;
 }
 
-.addPhoto {
+.Photo {
   display: flex;
   align-items: center;
   justify-content: center;

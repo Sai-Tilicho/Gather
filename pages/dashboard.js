@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Image from "next/image";
 import { Tooltip } from "antd";
 import BottomSheet from "@/src/components/bottomSheet";
 import { useRouter } from "next/router";
-import { useUser } from "./dashboardContext";
+import { SparkContext } from "@/src/components/sparkContentContext";
 
 export default function EmptyDashBoard() {
   const [open, setOpen] = useState(false);
-  const { firstName, lastName, imageURL } = useUser();
+  const { firstName, lastName, imageURL } = useContext(SparkContext);
   const router = useRouter();
   const showDrawer = () => {
     setOpen(true);

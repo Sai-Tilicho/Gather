@@ -10,7 +10,7 @@ export default function SparkContent({ content }) {
           {part === "____" ? (
             <input type="text" disabled className="inputBox" />
           ) : part === "📷" ? (
-            <button className="addPhoto">
+            <button className="Photo">
               <BsCamera size={18} color="rgb(66 69 83)" />
               add photo
             </button>

@@ -5,14 +5,24 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 
 export default function DisplayConversation() {
-  const { sparkContent, setSparkContent, filledSpark, sparkURL } =
-    useContext(SparkContext);
+  const {
+    sparkContent,
+    setSparkContent,
+    filledSpark,
+    sparkURL,
+    imageURL,
+    firstName,
+    lastName,
+  } = useContext(SparkContext);
 
   const splitSpark = filledSpark.split("📷");
 
   const [messageTimestamp, setMessageTimestamp] = useState(new Date());
   const [timeAgoString, setTimeAgoString] = useState("Just Now");
   const router = useRouter();
+
+  const firstLetter = firstName.toUpperCase();
+  const lastLetter = lastName.toUpperCase();
 
   useEffect(() => {
     if (sparkContent && sparkContent.timestamp) {
@@ -35,11 +45,11 @@ export default function DisplayConversation() {
     if (seconds < 60) {
       return "Just Now";
     } else if (minutes < 60) {
-      return `${minutes} ${minutes === 1 ? "min" : "mins"} ago`;
+      return `${minutes} ${minutes === 1 ? "min" : "mins"} `;
     } else if (hours < 24) {
-      return `${hours} ${hours === 1 ? "hr" : "hrs"} ago`;
+      return `${hours} ${hours === 1 ? "hr" : "hrs"} `;
     } else {
-      return `${days} ${days === 1 ? "day" : "days"} ago`;
+      return `${days} ${days === 1 ? "day" : "days"} `;
     }
   };
 
@@ -54,16 +64,6 @@ export default function DisplayConversation() {
     };
   }, []);
 
-  const getFormattedTimestamp = () => {
-    const options = {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    };
-
-    return messageTimestamp.toLocaleString(undefined, options);
-  };
-
   return (
     <div className="conversationDiv">
       <Header />
@@ -77,11 +77,29 @@ export default function DisplayConversation() {
       {splitSpark ? (
         <div>
           <div>
-            <div className="imageSpaekContent">
-              <img src={"/assets/favicon.ico"} width={53.33} height={53.33} />
+            <div className="imageSparkContent">
+              {imageURL ? (
+                <img
+                  className="imageProfile"
+                  src={imageURL}
+                  width={53.33}
+                  height={53.33}
+                />
+              ) : (
+                <p className="profileName">
+                  {firstLetter[0]}
+                  {lastLetter[0]}
+                </p>
+              )}
               <div className="sparkmsgHead">
                 <div style={{ fontSize: "17pt" }}>You</div>
-                <div style={{ fontSize: "12pt" }}>{timeAgoString}</div>
+                <div
+                  style={{
+                    fontSize: "12pt",
+                  }}
+                >
+                  {timeAgoString}
+                </div>
               </div>
             </div>
           </div>

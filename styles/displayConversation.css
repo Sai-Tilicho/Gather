@@ -13,14 +13,27 @@
 .sparkmsgHead {
   display: flex;
   align-items: center;
-  gap: 200pt;
+  gap: 230pt;
 }
 
-.imageSpaekContent {
+.imageSparkContent {
   display: flex;
   gap: 14pt;
   padding-left: 11pt;
   padding-top: 11pt;
+}
+
+.profileName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: -webkit-linear-gradient(#ff7c7c, #272727);
+  border-radius: 50%;
+  width: 40pt;
+  height: 40pt;
+  font-weight: 700;
+  font-size: 18pt;
+  color: rgb(231, 143, 143);
 }
 
 .sparkImage {
