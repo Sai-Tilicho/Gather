@@ -1,7 +1,18 @@
+
+import GroupList from '@/src/components/groupList';
+import WeeklySpark from "./weeklySpark";
 import React from 'react';
 
 export default function Home() {
   return (
-    <div></div>
+    <div>
+     {/* <GroupList/> */}
+     <WeeklySpark />
+    </div>
   )
 }
+
+
+
+
+
