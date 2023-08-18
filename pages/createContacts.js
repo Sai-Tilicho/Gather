@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { getDataFromDb } from "@/firebase";
 import { Alert, Button, Form, Input, message, Upload } from "antd";
 import { IoIosArrowBack } from "react-icons/io";
 import Image from "next/image";
@@ -42,7 +41,7 @@ export default function CreateContacts() {
       setName(event.target.value);
       setError("");
     } else {
-      setError("Please enter a  value");
+      setError("Please enter a value");
       setNumber("");
     }
   };
@@ -58,6 +57,30 @@ export default function CreateContacts() {
       setNumber("");
     }
   };
+
+  const handleNumberKeyDown = (e) => {
+    // Allow only numeric digits and control keys
+    const allowedKeys = [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "Backspace",
+      "Delete",
+      "ArrowLeft",
+      "ArrowRight",
+    ];
+    if (!allowedKeys.includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   const updateContactDataToDB = (imageURL) => {
     if (number !== "" && name !== "") {
       setDataToDb("userContactNumbers/" + `${userId}` + "/" + uuidv4(), {
@@ -142,7 +165,7 @@ export default function CreateContacts() {
             className="upload_div"
             listType="picture-circle"
           >
-            Add Group photo
+            Add Profile photo
           </Upload>
         </ImgCrop>
       </div>
@@ -158,6 +181,7 @@ export default function CreateContacts() {
           placeholder="Contact Number"
           className="contactInput"
           onChange={handleNumber}
+          onKeyDown={handleNumberKeyDown}
           maxLength={10}
         />
         {error && <Alert type="error" message={error} />}

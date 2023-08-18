@@ -16,8 +16,8 @@
   gap: 20pt;
 }
 .grpContactTitle {
-  font-family: "Raleway-SemiBold";
-
+  font-family: "Raleway";
+  font-weight: 600;
   font-size: 16pt;
   letter-spacing: 1pt;
   color: rgb(19, 23, 69);
@@ -25,7 +25,8 @@
 .grpContactsDescription {
   width: 150pt;
 
-  font-family: "Raleway-Regular";
+  font-family: "Raleway";
+  font-weight: 400;
   font-size: 13pt;
   letter-spacing: 1pt;
   color: rgb(19, 23, 69);

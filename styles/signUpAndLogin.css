@@ -64,7 +64,6 @@ body {
 .password::placeholder {
   color: rgb(167, 164, 164);
   font-size: 18pt;
-  /* padding-left: 10pt; */
 }
 .password:hover {
   border: 1pt solid rgb(0, 157, 255);
@@ -76,7 +75,7 @@ body {
 .iconDiv {
   position: absolute;
   left: 270pt;
-  top: 20pt;
+  top: 18pt;
 }
 .passwordToggle {
   color: rgb(167, 164, 164);

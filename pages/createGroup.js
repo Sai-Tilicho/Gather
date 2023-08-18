@@ -1,15 +1,17 @@
 import { getDataFromDb, setDataToDb, storage } from "@/firebase";
+import { SparkContext } from "@/src/components/sparkContentContext";
 import { uuidv4 } from "@firebase/util";
 import { Alert, Button, Form, Input, Upload, message } from "antd";
 import ImgCrop from "antd-img-crop";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 
 export default function CreateGroup() {
   const router = useRouter();
+  const { sparkContent } = useContext(SparkContext);
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
   const [timeStamp, setTimeStamp] = useState(new Date());
@@ -24,24 +26,23 @@ export default function CreateGroup() {
     },
   ]);
   const [messageApi, contextHolder] = message.useMessage();
+  const [messageTimestamp, setMessageTimestamp] = useState(new Date());
+  const [timeAgoString, setTimeAgoString] = useState("Just Now");
   const success = () => {
     if (!error) {
-      router.push("/dashboard");
       messageApi.open({
         type: "success",
         content: "Group created successfully",
       });
     }
   };
-  useEffect(() => {
-    const interval = setInterval(() => {
-      updateTimestamp();
-    }, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  useEffect(() => {
+    if (sparkContent && sparkContent.timestamp) {
+      setMessageTimestamp(new Date(sparkContent.timestamp));
+    }
+  }, [sparkContent]);
+
   useEffect(() => {
     const getUsersDataFromDB = () => {
       getDataFromDb(
@@ -99,6 +100,37 @@ export default function CreateGroup() {
 
     getUsersDataFromDB();
   }, []);
+
+  const getTimeAgoString = () => {
+    const currentTimestamp = new Date();
+    const timeDifference = currentTimestamp - messageTimestamp;
+    const seconds = Math.floor(timeDifference / 1000);
+    const hours = Math.floor(timeDifference / 3600000);
+    const minutes = Math.floor(timeDifference / 60000);
+    const days = Math.floor(timeDifference / 86400000);
+
+    if (seconds < 60) {
+      return "Just Now";
+    } else if (minutes < 60) {
+      return `${minutes} ${minutes === 1 ? "min" : "mins"} `;
+    } else if (hours < 24) {
+      return `${hours} ${hours === 1 ? "hr" : "hrs"} `;
+    } else {
+      return `${days} ${days === 1 ? "day" : "days"} `;
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMessageTimestamp(new Date());
+      setTimeAgoString(getTimeAgoString());
+    }, 60000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   const handleUpload = () => {
     if (groupName !== "" && description !== "") {
       if (imgChange?.[0]?.originFileObj) {
@@ -108,49 +140,35 @@ export default function CreateGroup() {
             .then((url) => {
               updateTimestamp();
               updateContactDataToDB(url);
-              success(); // Navigate to the next page
+              success();
+              router.push("/dashboard"); // Navigate to the next page
             })
             .catch((error) => {
               throw error;
             });
         });
       } else {
-        updateTimestamp();
         updateContactDataToDB("/assets/profile.png");
-        success(); // Navigate to the next page
+        success();
+        router.push("/dashboard"); // Navigate to the next page
       }
     } else {
       setError("Please enter a value");
     }
   };
-  const updateTimestamp = () => {
-    const now = new Date();
-
-    const dateOptions = { year: "numeric", month: "long", day: "numeric" };
-    const timeOptions = { hour: "numeric", minute: "numeric", hour12: true };
-
-    const formattedDate = now.toLocaleDateString(undefined, dateOptions);
-    const formattedTime = now.toLocaleTimeString(undefined, timeOptions);
-
-    setTimeStamp({
-      date_locale: formattedDate,
-      time_locale: formattedTime,
-    });
-  };
 
   const updateContactDataToDB = async (imageUrl) => {
     try {
       getDataFromDb("group", (data) => {
-        //if data not present
         let credentials = localStorage.getItem("userCredentials");
         const parseCredentials = JSON.parse(credentials);
         if (!data) {
-          setDataToDb("group/" + uuidv4(), {
+          setDataToDb("group/" + `${parseCredentials.user.uid}/` + uuidv4(), {
             group_name: groupName,
             description: description,
             avatar_url: imageUrl,
             contacts: contacts,
-            time_stamp: timeStamp,
+            time_stamp: timeAgoString,
           });
         } else {
           const existingGroups = Object.keys(data);
@@ -163,12 +181,12 @@ export default function CreateGroup() {
           if (groupExists) {
             setError("Group name already exists");
           } else {
-            setDataToDb("group/" + uuidv4(), {
+            setDataToDb("group/" + `${parseCredentials.user.uid}/` + uuidv4(), {
               group_name: groupName,
               description: description,
               avatar_url: imageUrl,
               contacts: contacts,
-              time_stamp: timeStamp,
+              time_stamp: timeAgoString,
             });
           }
         }

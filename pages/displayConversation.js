@@ -31,8 +31,6 @@ export default function DisplayConversation() {
     }
   }, [sparkContent]);
 
-  console.log(imageURL);
-
   const handleStart = () => {
     router.push("weeklySpark");
   };

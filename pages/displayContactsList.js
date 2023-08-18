@@ -153,13 +153,9 @@ const DisplayContactsListComp = () => {
       <div>
         <div className="header-container">
           <div className="top_header">
-            <Link
-              className="Links Cancel"
-              onClick={() => Router.push("/dashboard")}
-              href={""}
-            >
+            <p className="Cancel" onClick={() => Router.push("createContacts")}>
               Cancel
-            </Link>
+            </p>
 
             <div className="add_partici_container">
               <p className="Add_partici">Add Participants</p>

@@ -1,22 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { getDataFromDb } from "@/firebase";
 import { Empty, Tooltip } from "antd";
+import { useRouter } from "next/router";
 
 export default function GroupContacts({ handleSharing = () => {} }) {
   const [groupData, setGroupData] = useState(null);
+  const [parseCredentials, setParseCredentials] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const getContactDataFromDB = () => {
-      getDataFromDb(
-        "group",
-        (data) => {
-          setGroupData(data);
-        },
-        (error) => {
-          console.log(error);
+      let credentials = localStorage.getItem("userCredentials");
+      const parsedCredentials = JSON.parse(credentials);
+      setParseCredentials(parsedCredentials);
+
+      getDataFromDb("group", (data) => {
+        const filteredGroups = Object.keys(data).filter((groupId) => {
+          return parsedCredentials.user.uid === groupId;
+        });
+        if (filteredGroups.length > 0) {
+          const groupId = filteredGroups[0];
+          getDataFromDb(
+            "group/" + groupId,
+            (groupData) => {
+              setGroupData(groupData);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
         }
-      );
+      });
     };
+
     getContactDataFromDB();
   }, []);
 
@@ -24,7 +40,7 @@ export default function GroupContacts({ handleSharing = () => {} }) {
     <div className="groupDataContainer">
       <div className="dataContainer">
         {groupData === null ? (
-          <Empty></Empty>
+          <Empty />
         ) : Object.keys(groupData).length === 0 ? (
           <p>No groups available</p>
         ) : (
@@ -34,6 +50,7 @@ export default function GroupContacts({ handleSharing = () => {} }) {
               className="card"
               onClick={() => {
                 handleSharing(groupId, groupData[groupId].group_name);
+                router.push("/displayConversation");
               }}
             >
               <div>
@@ -55,9 +72,7 @@ export default function GroupContacts({ handleSharing = () => {} }) {
               </div>
               <div style={{ display: "grid", gap: "10px" }}>
                 <Tooltip>
-                  <p className="">
-                    {groupData[groupId].time_stamp.time_locale}
-                  </p>
+                  <p className="">{groupData[groupId].time_stamp}</p>
                 </Tooltip>
               </div>
             </div>

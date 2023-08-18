@@ -2,7 +2,7 @@
   width: 375pt;
   height: 667pt;
   margin: auto;
-  border: 1px solid black;
+  border: 1pt solid rgb(225, 225, 225);
 }
 
 .createGroupDiv {
@@ -10,14 +10,13 @@
   align-items: center;
   gap: 110pt;
   padding: 10pt;
-  margin-top: 15pt;
 }
 .groupBackArrow {
   height: 18pt;
   width: 18pt;
 }
 .createGroupTitle {
-  font-family: "Arial-BoldMT";
+  font-family: "Arial";
   font-size: 16pt;
 }
 .grpForm {
@@ -36,7 +35,8 @@
   border: none;
   padding: 14pt;
   font-size: 16pt;
-  font-family: "Raleway," "Medium";
+  font-family: "Raleway";
+  font-weight: 500;
   background-color: rgb(239 241 244);
 }
 .createGrpButton {
@@ -45,7 +45,8 @@
   border-radius: 4pt;
   box-shadow: rgba(20, 31, 77, 0.3);
   background-color: rgb(10, 158, 136);
-  font-family: "Raleway-SemiBold";
+  font-family: "Raleway";
+  font-weight: 600;
   color: white;
   font-size: 16pt;
   text-align: center;
@@ -81,7 +82,8 @@
   color: #4a90e2;
   font-size: 12pt;
   text-align: center;
-  font-family: "Raleway," "Medium";
+  font-family: "Raleway";
+  font-weight: 500;
 }
 
 .upload_container
@@ -108,5 +110,4 @@
 
 .upload_container {
   padding-bottom: 14.5pt;
-  border-bottom: 1pt solid rgba(146, 138, 138, 0.2);
 }
