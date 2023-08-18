@@ -57,7 +57,6 @@ export default function CreateGroup() {
             "userContactNumbers/" + `${userIdsWithTrueStatus}`,
             (contactData) => {
               try {
-                console.log("object", contactData);
                 const trueContactKeys = Object.keys(contactData).filter(
                   (key) => {
                     return contactData[key].status === "true";
@@ -75,10 +74,6 @@ export default function CreateGroup() {
                     };
                   });
 
-                  console.log(
-                    "Selected Contact Details:",
-                    selectedContactDetails
-                  );
                   setContacts(selectedContactDetails);
                 } else {
                   console.log("No contacts with status true found.");
@@ -138,10 +133,9 @@ export default function CreateGroup() {
         uploadBytes(imageRef, imgChange[0]?.originFileObj).then((snapshot) => {
           getDownloadURL(snapshot.ref)
             .then((url) => {
-              updateTimestamp();
               updateContactDataToDB(url);
               success();
-              router.push("/dashboard"); // Navigate to the next page
+              router.push("/dashboard");
             })
             .catch((error) => {
               throw error;
@@ -150,7 +144,7 @@ export default function CreateGroup() {
       } else {
         updateContactDataToDB("/assets/profile.png");
         success();
-        router.push("/dashboard"); // Navigate to the next page
+        router.push("/dashboard");
       }
     } else {
       setError("Please enter a value");
@@ -181,7 +175,9 @@ export default function CreateGroup() {
           if (groupExists) {
             setError("Group name already exists");
           } else {
-            setDataToDb("group/" + `${parseCredentials.user.uid}/` + uuidv4(), {
+            const groupId = uuidv4();
+            localStorage.setItem("groupId", groupId);
+            setDataToDb("group/" + `${parseCredentials.user.uid}/` + groupId, {
               group_name: groupName,
               description: description,
               avatar_url: imageUrl,
@@ -234,7 +230,6 @@ export default function CreateGroup() {
 
     const imgWindow = window.open(src);
     setImageSrc(imgWindow);
-    console.log("src", imageSrc);
     imgWindow?.document.write(image.outerHTML);
   };
 

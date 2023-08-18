@@ -32,7 +32,7 @@ export default function DisplayConversation() {
   }, [sparkContent]);
 
   const handleStart = () => {
-    router.push("weeklySpark");
+    router.push("/weeklySpark");
   };
 
   const getTimeAgoString = () => {

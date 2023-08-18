@@ -50,7 +50,6 @@ export default function GroupContacts({ handleSharing = () => {} }) {
               className="card"
               onClick={() => {
                 handleSharing(groupId, groupData[groupId].group_name);
-                router.push("/displayConversation");
               }}
             >
               <div>

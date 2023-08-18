@@ -1,10 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Image from "next/image";
 import { Tooltip } from "antd";
 import BottomSheet from "@/src/components/bottomSheet";
 import { useRouter } from "next/router";
 import { SparkContext } from "@/src/components/sparkContentContext";
 import GroupContacts from "@/src/components/groupContacts";
+import GroupList from "@/src/components/groupList";
+import Groups from "@/src/components/groups";
+import Link from "next/link";
 
 export default function EmptyDashBoard() {
   const [open, setOpen] = useState(false);
@@ -33,7 +36,6 @@ export default function EmptyDashBoard() {
       </div>
     </div>
   );
-
   return (
     <div className="emptyContactsMainPage">
       <div className="emptyContactHeader">
@@ -68,8 +70,8 @@ export default function EmptyDashBoard() {
       <div className="accessDiv" onClick={handleSparkRoute}>
         <div>This week's Spark</div>
       </div>
-      {/* <div className="noData">No groups found, start by creating one</div> */}
-      <GroupContacts />
+      <Groups />
+
       <div className="bottomSheet">
         {open && (
           <div onClick={() => setOpen(false)}>

@@ -55,26 +55,33 @@ export const SparkContentContext = ({ children }) => {
 
   useEffect(() => {
     setLogin(true);
-    const dbRef = ref(database);
-    get(child(dbRef, `/conversations`))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          snapshot.forEach((userSnapshot) => {
-            const userData = userSnapshot.val();
-            if (userData.status === true) {
-              setSparkURL(userData.profileImageUrl);
-              setGroupName(userData.groupName);
-              setFilledSpark(userData.spark);
+    (async () => {
+      const storedGroupId = await localStorage.getItem("groupId");
+      const storedConversationId = await localStorage.getItem(
+        "newConversationId"
+      );
+      if (storedGroupId && storedConversationId) {
+        const conversationRef = ref(
+          database,
+          `conversations/${storedGroupId}/${storedConversationId}`
+        );
+        get(conversationRef)
+          .then((conversationSnapshot) => {
+            if (conversationSnapshot.exists()) {
+              const conversationData = conversationSnapshot.val();
+              setGroupName(conversationData.groupName);
+              setFilledSpark(conversationData.spark);
+              setSparkURL(conversationData.profileImageUrl);
+            } else {
+              console.log("No data available for the stored group ID");
             }
+          })
+          .catch((error) => {
+            console.error("Error fetching conversation data:", error);
           });
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+      }
+    })();
+  }, [isLogin]);
 
   const contextValue = {
     sparkContent,

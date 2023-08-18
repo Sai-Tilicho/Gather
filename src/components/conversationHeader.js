@@ -8,7 +8,7 @@ export default function Header() {
   const { groupName } = useContext(SparkContext);
   const router = useRouter();
   const handleBackPage = () => {
-    router.push("/dashboard");
+    router.push("/weeklySpark");
   };
 
   return (
