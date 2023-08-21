@@ -162,7 +162,7 @@ const DisplayContactsListComp = () => {
               <div className="top_header">
                 <Link
                   className="Links Cancel"
-                  onClick={() => Router.push("/dashboard")}
+                  onClick={() => Router.push("/createContacts")}
                   href=""
                 >
                   Cancel
