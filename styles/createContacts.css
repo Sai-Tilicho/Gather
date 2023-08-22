@@ -108,7 +108,8 @@
   color: #4a90e2;
   font-size: 12pt;
   text-align: center;
-  font-family: "Raleway," "Medium";
+  font-family: "Raleway";
+  font-weight: 500;
 }
 
 .contactImg_upload_container.ant-upload-wrapper

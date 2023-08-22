@@ -1,17 +1,18 @@
-import { getDataFromDb, setDataToDb, storage } from "@/firebase";
-import { SparkContext } from "@/src/components/sparkContentContext";
+
+import {  getDataFromDb, setDataToDb, storage } from "@/firebase";
+
 import { uuidv4 } from "@firebase/util";
 import { Alert, Button, Form, Input, Upload, message } from "antd";
 import ImgCrop from "antd-img-crop";
+// import { set } from "firebase/database";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 
 export default function CreateGroup() {
   const router = useRouter();
-  const { sparkContent } = useContext(SparkContext);
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
   const [imageSrc, setImageSrc] = useState("");
@@ -24,11 +25,12 @@ export default function CreateGroup() {
       url: "/assets/profile.png",
     },
   ]);
+
   const [messageApi, contextHolder] = message.useMessage();
-  const [messageTimestamp, setMessageTimestamp] = useState(new Date());
-  const [timeAgoString, setTimeAgoString] = useState("Just Now");
+
   const success = () => {
     if (!error) {
+      router.push("/dashboard");
       messageApi.open({
         type: "success",
         content: "Group created successfully",
@@ -36,55 +38,84 @@ export default function CreateGroup() {
     }
   };
 
-  useEffect(() => {
-    if (sparkContent && sparkContent.timestamp) {
-      setMessageTimestamp(new Date(sparkContent.timestamp));
+  const addContactsToGroup = () => {
+    const credentials = localStorage.getItem("userCredentials");
+    const parseCredentials = JSON.parse(credentials);
+    const userId = parseCredentials.user.uid;
+    getDataFromDb(`userContactNumbers/${userId}`, (contactsids) => {
+      console.log("contactsids", contactsids);
+      Object.keys(contactsids).forEach((contactId) => {
+        setDataToDb(`userContactNumbers/${userId}/${contactId}/status`, "false");
+      });
+    });
+  };
+
+  
+  const handleUpload = () => {
+    if (groupName !== "" && description !== "") {
+      if (imgChange?.[0]?.originFileObj) {
+        const imageRef = ref(storage, `GroupImages/${Date.now()}`);
+        uploadBytes(imageRef, imgChange[0]?.originFileObj).then((snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              const currentTimeStamp = new Date().getTime();
+              const formattedTimestamp = updateTimestamp(currentTimeStamp);
+
+              addContactsToGroup();
+              updateContactDataToDB(url, formattedTimestamp);
+              success();
+            })
+            .catch((error) => {
+              throw error;
+            });
+        });
+      } else {
+        addContactsToGroup();
+        updateContactDataToDB("/assets/profile.png");
+        success();
+        
+      }
+    } else {
+      setError("Please enter a value");
     }
-  }, [sparkContent]);
+  };
 
   useEffect(() => {
     const getUsersDataFromDB = () => {
+      const credentials = localStorage.getItem("userCredentials");
+      const parseCredentials = JSON.parse(credentials);
+
       getDataFromDb(
-        "users",
+        "userContactNumbers",
         (userData) => {
-          const userIdsWithTrueStatus = Object.keys(userData).filter(
-            (userId) => {
-              return userData[userId].status === "true";
-            }
-          );
-          getDataFromDb(
-            "userContactNumbers/" + `${userIdsWithTrueStatus}`,
-            (contactData) => {
-              try {
-                const trueContactKeys = Object.keys(contactData).filter(
-                  (key) => {
-                    return contactData[key].status === "true";
-                  }
-                );
-                if (trueContactKeys.length > 0) {
-                  const selectedContactDetails = trueContactKeys.map((key) => {
-                    const contact = contactData[key];
+          const userIdsWithTrueStatus = Object.keys(userData).filter((userId) => {
+            return parseCredentials.user.uid === userId;
+          });
 
-                    return {
-                      id: key,
-                      mobile_number: contact.mobile_number,
-                      status: contact.status,
-                      contact_name: contact.contact_name,
-                    };
+          console.log("userIdsWithTrueStatus", userIdsWithTrueStatus);
+
+          if (userIdsWithTrueStatus.length > 0) {
+            const selectedContactDetails = [];
+
+            userIdsWithTrueStatus.forEach((userId) => {
+              const user = userData[userId];
+              Object.keys(user).forEach((groupId) => {
+                const selectedContacts = user[groupId];
+
+                if (selectedContacts.status === "true") {
+                  selectedContactDetails.push({
+                    mobile_number: selectedContacts.mobile_number,
+                    status: selectedContacts.status,
+                    contact_name: selectedContacts.contact_name,
+                    userId: userId,
                   });
-
-                  setContacts(selectedContactDetails);
-                } else {
-                  console.log("No contacts with status true found.");
                 }
-              } catch (error) {
-                console.log("Error while processing contact data:", error);
-              }
-            },
-            (contactError) => {
-              console.log("Contact Data Error:", contactError);
-            }
-          );
+              });
+            });
+            setContacts(selectedContactDetails);
+          } else {
+            console.log("No contacts with status true found.");
+          }
         },
         (userError) => {
           console.log("User Data Error:", userError);
@@ -95,94 +126,29 @@ export default function CreateGroup() {
     getUsersDataFromDB();
   }, []);
 
-  const getTimeAgoString = () => {
-    const currentTimestamp = new Date();
-    const timeDifference = currentTimestamp - messageTimestamp;
-    const seconds = Math.floor(timeDifference / 1000);
-    const hours = Math.floor(timeDifference / 3600000);
-    const minutes = Math.floor(timeDifference / 60000);
-    const days = Math.floor(timeDifference / 86400000);
-
-    if (seconds < 60) {
-      return "Just Now";
-    } else if (minutes < 60) {
-      return `${minutes} ${minutes === 1 ? "min" : "mins"} `;
-    } else if (hours < 24) {
-      return `${hours} ${hours === 1 ? "hr" : "hrs"} `;
-    } else {
-      return `${days} ${days === 1 ? "day" : "days"} `;
-    }
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setMessageTimestamp(new Date());
-      setTimeAgoString(getTimeAgoString());
-    }, 60000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  const handleUpload = () => {
-    if (groupName !== "" && description !== "") {
-      if (imgChange?.[0]?.originFileObj) {
-        const imageRef = ref(storage, `GroupImages/${Date.now()}`);
-        uploadBytes(imageRef, imgChange[0]?.originFileObj).then((snapshot) => {
-          getDownloadURL(snapshot.ref)
-            .then((url) => {
-              updateContactDataToDB(url);
-              success();
-              router.push("/dashboard");
-            })
-            .catch((error) => {
-              throw error;
-            });
-        });
-      } else {
-        updateContactDataToDB("/assets/profile.png");
-        success();
-        router.push("/dashboard");
-      }
-    } else {
-      setError("Please enter a value");
-    }
-  };
-
-  const updateContactDataToDB = async (imageUrl) => {
+  const updateContactDataToDB = async (imageUrl, timestamp) => {
     try {
-      getDataFromDb("group", (data) => {
-        let credentials = localStorage.getItem("userCredentials");
-        const parseCredentials = JSON.parse(credentials);
-        if (!data) {
-          setDataToDb("group/" + `${parseCredentials.user.uid}/` + uuidv4(), {
+      const credentials = localStorage.getItem("userCredentials");
+      const parseCredentials = JSON.parse(credentials);
+      const userId = parseCredentials.user.uid;
+
+      getDataFromDb(`group/${userId}`, (groupData) => {
+        if (!groupData) {
+          setDataToDb(`group/${userId}/${uuidv4()}`, {
             group_name: groupName,
             description: description,
             avatar_url: imageUrl,
-            contacts: contacts,
-            time_stamp: timeAgoString,
+            contact_details: contacts,
+            time_stamp: String(new Date()),
           });
         } else {
-          const existingGroups = Object.keys(data);
-
-          const groupExists =
-            existingGroups.filter((groupKey) => {
-              const group = data[groupKey];
-              return group.group_name === groupName;
-            }).length === 1;
-          if (groupExists) {
-            setError("Group name already exists");
-          } else {
-            const groupId = uuidv4();
-            setDataToDb("group/" + `${parseCredentials.user.uid}/` + groupId, {
-              group_name: groupName,
-              description: description,
-              avatar_url: imageUrl,
-              contacts: contacts,
-              time_stamp: timeAgoString,
-            });
-          }
+          setDataToDb(`group/${userId}/${uuidv4()}`, {
+            group_name: groupName,
+            description: description,
+            avatar_url: imageUrl,
+            contact_details: contacts,
+            time_stamp: String(new Date()),
+          });
         }
       });
     } catch (error) {
@@ -213,6 +179,7 @@ export default function CreateGroup() {
       setError("Please enter a value");
     }
   };
+
   const onPreview = async (file) => {
     let src = "/assets/profile.png";
     if (!src) {

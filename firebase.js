@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { get, getDatabase, ref, set } from "firebase/database";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";s
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -31,8 +31,19 @@ export const setDataToDb = (path, data, onSuccess, onError) => {
       if (onError !== undefined) {
         onError(error);
       }
+
+    set(ref(database, path), data).then(() => {
+        if(onSuccess !== undefined) {
+            onSuccess()
+        }
+    }).catch((error) => {
+        if(onError !== undefined) {
+            onError(error)
+        }
+
     });
-};
+    });
+}
 
 export const getDataFromDb = (path, onSuccess, onError) => {
   get(ref(database, path))
@@ -46,4 +57,5 @@ export const getDataFromDb = (path, onSuccess, onError) => {
         onError(error);
       }
     });
-};
+}
+

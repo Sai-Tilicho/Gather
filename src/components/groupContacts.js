@@ -8,7 +8,29 @@ export default function GroupContacts({ handleSharing = () => {} }) {
   const [parseCredentials, setParseCredentials] = useState(null);
   const router = useRouter();
 
-  useEffect(() => {
+
+    const formatTimestamp = (timestamp) => {
+      const now = new Date();
+      const tsDate = new Date(timestamp);
+      const timeDifference = now - tsDate;
+      
+      if (timeDifference < 60000) { 
+        return "just now";
+      } else if (timeDifference < 3600000) { 
+        const minutes = Math.floor(timeDifference / 60000);
+        return `${minutes} min ago`;
+      } else {
+        const hours = Math.floor(timeDifference / 3600000);
+        return `${hours} hr ago`;
+      }
+    };
+    useEffect(() => {
+      getContactDataFromDB();
+      const intervalId = setInterval(getContactDataFromDB, 60000);
+      return () => clearInterval(intervalId);
+    }, []);
+
+ 
     const getContactDataFromDB = () => {
       let credentials = localStorage.getItem("userCredentials");
       const parsedCredentials = JSON.parse(credentials);
@@ -24,6 +46,7 @@ export default function GroupContacts({ handleSharing = () => {} }) {
             "group/" + groupId,
             (groupData) => {
               setGroupData(groupData);
+              
             },
             (error) => {
               console.log(error);
@@ -32,10 +55,6 @@ export default function GroupContacts({ handleSharing = () => {} }) {
         }
       });
     };
-
-    getContactDataFromDB();
-  }, []);
-
   return (
     <div className="groupDataContainer">
       <div className="dataContainer">
@@ -71,7 +90,7 @@ export default function GroupContacts({ handleSharing = () => {} }) {
               </div>
               <div style={{ display: "grid", gap: "10px" }}>
                 <Tooltip>
-                  <p className="">{groupData[groupId].time_stamp}</p>
+                  <p className="">{formatTimestamp(groupData[groupId].time_stamp)}</p>
                 </Tooltip>
               </div>
             </div>

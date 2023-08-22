@@ -59,7 +59,6 @@ export default function CreateContacts() {
   };
 
   const handleNumberKeyDown = (e) => {
-    // Allow only numeric digits and control keys
     const allowedKeys = [
       "0",
       "1",
@@ -83,7 +82,7 @@ export default function CreateContacts() {
 
   const updateContactDataToDB = (imageURL) => {
     if (number !== "" && name !== "") {
-      setDataToDb("userContactNumbers/" + `${userId}` + "/" + uuidv4(), {
+   setDataToDb("userContactNumbers/" + `${userId}` + "/" + uuidv4(), {
         mobile_number: number,
         contact_name: name,
         avatar_url: imageURL ? imageURL : "/assets/profile.png",
@@ -98,7 +97,6 @@ export default function CreateContacts() {
       setError("Please fill in all the fields.");
       return;
     }
-
     if (imgChange?.[0]?.originFileObj) {
       const imageRef = reference(storage, `GroupImages/${Date.now()}`);
       uploadBytes(imageRef, imgChange[0]?.originFileObj).then((snapshot) => {
