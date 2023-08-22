@@ -11,7 +11,10 @@ export default function GroupContacts({ handleSharing = () => {} }) {
 
     const formatTimestamp = (timestamp) => {
       const now = new Date();
+
+
       const tsDate = new Date(timestamp);
+      
       const timeDifference = now - tsDate;
       
       if (timeDifference < 60000) { 
@@ -19,11 +22,17 @@ export default function GroupContacts({ handleSharing = () => {} }) {
       } else if (timeDifference < 3600000) { 
         const minutes = Math.floor(timeDifference / 60000);
         return `${minutes} min ago`;
-      } else {
+      } else if (timeDifference < 86400000) {
         const hours = Math.floor(timeDifference / 3600000);
         return `${hours} hr ago`;
+      } else {
+        const days = Math.floor(timeDifference / 86400000);
+        return `${days} days ago`;
       }
     };
+//     var timestamp = "Tue Aug 22 2023 15:01:23 GMT+0530 (India Standard Time)";
+//     const formattedTimestamp = formatTimestamp(new Date(timestamp));
+// console.log("formattedTimestamp", formattedTimestamp);
     useEffect(() => {
       getContactDataFromDB();
       const intervalId = setInterval(getContactDataFromDB, 60000);
