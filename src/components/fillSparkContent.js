@@ -4,14 +4,10 @@ import { Upload, Button, message, Input } from "antd";
 import { SparkContext } from "./sparkContentContext";
 import { useRouter } from "next/router";
 import { storage } from "@/firebase";
-import {
-  uploadBytes,
-  ref as reference,
-  getDownloadURL,
-} from "firebase/storage";
+import { uploadBytes, ref as reference } from "firebase/storage";
 
 export default function FillSparkContent({ content }) {
-  const { combinedContent, setCombinedContent, fileList, setFileList } =
+  const { setCombinedContent, fileList, setFileList } =
     useContext(SparkContext);
   const [inputValues, setInputValues] = useState([]);
   const [areAllRequiredFilled, setAreAllRequiredFilled] = useState(false);
@@ -58,9 +54,6 @@ export default function FillSparkContent({ content }) {
     const combinedContent = combinedContentArray.join("");
     setCombinedContent(combinedContent);
 
-    localStorage.setItem("FilledData", combinedContent);
-    localStorage.setItem("sparkURL", JSON.stringify(fileList));
-
     const allFilled = requiredInputIndices.every(
       (idx) => newInputValues[idx] && newInputValues[idx].trim() !== ""
     );
@@ -101,12 +94,10 @@ export default function FillSparkContent({ content }) {
               listType="picture"
               fileList={fileList}
               onChange={onChange}
-              onRemove={() => setFileList([])}
-            >
+              onRemove={() => setFileList([])}>
               <Button
                 icon={<BsCamera size={18} color="rgb(66 69 83)" />}
-                className="Photo"
-              >
+                className="Photo">
                 add photo
               </Button>
             </Upload>
@@ -118,8 +109,7 @@ export default function FillSparkContent({ content }) {
       <div className="button">
         <button
           className={`shareButton ${areAllRequiredFilled ? "enable" : ""}`}
-          onClick={handleShareClick}
-        >
+          onClick={handleShareClick}>
           SHARE
         </button>
       </div>

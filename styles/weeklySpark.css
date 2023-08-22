@@ -17,7 +17,6 @@ body {
   width: 375pt;
   height: 667pt;
   border: 1px solid rgb(225, 225, 225);
-  position: relative;
 }
 
 .backArrow svg {
@@ -87,15 +86,11 @@ body {
   border: 1.3pt solid rgb(249 243 243);
   margin: 0pt 11pt;
   box-shadow: 0pt 0pt 2pt rgba(52, 44, 44, 0.56);
-  padding-top: 20pt;
 }
 
 .topRightDesign {
   display: flex;
   justify-content: flex-end;
-  position: absolute;
-  right: 14px;
-  top: 90px;
 }
 
 .join {

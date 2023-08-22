@@ -5,10 +5,12 @@ import { SparkContext } from "@/src/components/sparkContentContext";
 import SparkSection from "@/src/components/sparkSection";
 
 export default function WeeklySpark() {
-  const { sparkContent, setSparkContent } = useContext(SparkContext);
+  const { sparkContent, setSparkContent, setFileList } =
+    useContext(SparkContext);
   const router = useRouter();
 
   const handleFillSpark = () => {
+    setFileList([]);
     router.push("fillSpark");
   };
 

@@ -11,7 +11,6 @@ function Login() {
     loginPassword,
     setLoginPasswordError,
     setEmailNotFoundError,
-    setLogin,
   } = useContext(SparkContext);
 
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -46,7 +45,6 @@ function Login() {
           loginEmail,
           loginPassword
         );
-        setLogin(true);
         messageApi.open({
           type: "success",
           content: " loggin successfull",

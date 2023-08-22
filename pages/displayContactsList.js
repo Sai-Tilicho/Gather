@@ -9,9 +9,8 @@ import {
   PlusOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import Image from "next/image";
-
 
 const getUserCredentials = () => {
   if (typeof window === "undefined") {
@@ -23,6 +22,7 @@ const getUserCredentials = () => {
 };
 
 const DisplayContactsListComp = () => {
+  const router = useRouter();
   const [contactsData, setContactsData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isAnyContactSelected, setIsAnyContactSelected] = useState(false);
@@ -64,7 +64,7 @@ const DisplayContactsListComp = () => {
               let validContactData = contactDataArray.filter(
                 (contactData) => contactData !== null
               );
-              setIsLoading(false)
+              setIsLoading(false);
               setContactsData(validContactData);
             })
             .catch((error) => {
@@ -115,16 +115,16 @@ const DisplayContactsListComp = () => {
     searchQuery.length === 0
       ? contactsData
       : contactsData.filter((contactData) => {
-        const contactNameLowerCase = contactData.contact_name.toLowerCase();
+          const contactNameLowerCase = contactData.contact_name.toLowerCase();
 
-        if (selectedLetterNumber !== null) {
-          return contactNameLowerCase.startsWith(
-            selectedLetterNumber.toLowerCase()
-          );
-        }
-        const searchQueryLowerCase = searchQuery.toLowerCase();
-        return contactNameLowerCase.includes(searchQueryLowerCase);
-      });
+          if (selectedLetterNumber !== null) {
+            return contactNameLowerCase.startsWith(
+              selectedLetterNumber.toLowerCase()
+            );
+          }
+          const searchQueryLowerCase = searchQuery.toLowerCase();
+          return contactNameLowerCase.includes(searchQueryLowerCase);
+        });
 
   const sortedContacts = _.orderBy(filteredContacts, ["contact_name"], ["asc"]);
 
@@ -156,145 +156,138 @@ const DisplayContactsListComp = () => {
   return (
     <div className="container">
       {
-        (
-          <div>
-            <div className="header-container">
-              <div className="top_header">
+        <div>
+          <div className="header-container">
+            <div className="top_header">
+              <Link
+                className="Links Cancel"
+                onClick={() => router.push("/createContacts")}
+                href="">
+                Cancel
+              </Link>
+
+              <div className="add_partici_container">
+                <p className="Add_partici">Add Participants</p>
+                <p className="count">
+                  {
+                    Object.keys(checkedContacts).filter(
+                      (id) => checkedContacts[id]
+                    ).length
+                  }
+                  /{contactsData.length}
+                </p>
+              </div>
+
+              {isAnyContactSelected ? (
                 <Link
-                  className="Links Cancel"
-                  onClick={() => Router.push("/createContacts")}
+                  className={`Links Next ${
+                    isAnyContactSelected ? "blueLink" : ""
+                  }`}
                   href=""
-                >
-                  Cancel
+                  onClick={() => Router.push("/createGroup")}>
+                  Next
                 </Link>
+              ) : (
+                <div className="next">Next</div>
+              )}
+            </div>
 
-                <div className="add_partici_container">
-                  <p className="Add_partici">Add Participants</p>
-                  <p className="count">
-                    {
-                      Object.keys(checkedContacts).filter(
-                        (id) => checkedContacts[id]
-                      ).length
-                    }
-                    /{contactsData.length}
-                  </p>
-                </div>
+            <div className="search_input_container">
+              <SearchOutlined className="search_icon" />
+              <input
+                className="search_input"
+                type="text"
+                placeholder="Search for a Friend"
+                value={searchQuery}
+                onChange={handleSearch}
+              />
+            </div>
+          </div>
+          {isLoading ? (
+            <div className="loader">
+              <LoadingOutlined spin />
+            </div>
+          ) : (
+            <div className="div_details">
+              <div className="contact_container" ref={contactContainerRef}>
+                {sortedContacts?.length > 0 ? (
+                  sortedContacts?.map((contactData, index) => (
+                    <div
+                      className="container_for_radio"
+                      key={index}
+                      id={`${index}`}>
+                      <div className="contact_container_div" key={index}>
+                        <div className="avatar_container">
+                          <Image
+                            className="avatar"
+                            src={
+                              contactData
+                                ? contactData?.avatar_url
+                                : "/assets/profile.png"
+                            }
+                            alt=""
+                            width={25}
+                            height={25}
+                          />
+                        </div>
 
-                {isAnyContactSelected ? (
-                  <Link
-                    className={`Links Next ${isAnyContactSelected ? "blueLink" : ""
-                      }`}
-                    href=""
-                    onClick={() => Router.push("/createGroup")}
-                  >
-                    Next
-                  </Link>
+                        <div className="contact_details">
+                          <Tooltip
+                            title={contactData?.contact_name}
+                            placement="topRight">
+                            <p className="contact_name">
+                              {capitalizeFirstLetter(contactData?.contact_name)}
+                            </p>
+                          </Tooltip>
+                          <p className="contact_number">
+                            {contactData?.mobile_number}
+                          </p>
+                        </div>
+                      </div>
+
+                      <label className="custom-checkbox">
+                        <Input
+                          type="checkbox"
+                          checked={checkedContacts[contactData.id] || false} // Check the correct contact's checked status
+                          onChange={(event) =>
+                            handleCheckboxChange(event, contactData.id)
+                          }
+                        />
+                        <span className="checkbox-style"></span>
+                      </label>
+                    </div>
+                  ))
                 ) : (
-                  <div className="next">Next</div>
+                  <div
+                    className="no_data"
+                    onClick={() => Router.push("/createContacts")}>
+                    <p className="contacts_not_available">
+                      No contacts available here...
+                    </p>
+                    <PlusOutlined className="plus_icon" />
+                  </div>
                 )}
               </div>
 
-              <div className="search_input_container">
-                <SearchOutlined className="search_icon" />
-                <input
-                  className="search_input"
-                  type="text"
-                  placeholder="Search for a Friend"
-                  value={searchQuery}
-                  onChange={handleSearch}
-                />
+              <div className="letter_numbers_container">
+                {contactsData.length > 0 &&
+                  scrollItems?.map((scrollItem) => (
+                    <div
+                      className={
+                        scrollItem?.scrollToIndex !== -1
+                          ? "letters"
+                          : "letters-disabled"
+                      }
+                      key={scrollItem?.char}
+                      onClick={() => scrollToLetter(scrollItem)}>
+                      {scrollItem?.char}
+                    </div>
+                  ))}
               </div>
             </div>
-            {
-              isLoading ? (<div className="loader">
-                <LoadingOutlined spin />
-              </div>) : (
-                <div className="div_details">
-                  <div className="contact_container" ref={contactContainerRef}>
-                    {sortedContacts?.length > 0 ? (
-                      sortedContacts?.map((contactData, index) => (
-                        <div
-                          className="container_for_radio"
-                          key={index}
-                          id={`${index}`}
-                        >
-                          <div className="contact_container_div" key={index}>
-                            <div className="avatar_container">
-                              <Image
-                                className="avatar"
-                                src={
-                                  contactData
-                                    ? contactData?.avatar_url
-                                    : "/assets/profile.png"
-                                }
-                                alt=''
-                                width={25}
-                                height={25}
-                              />
-                            </div>
-
-                            <div className="contact_details">
-                              <Tooltip
-                                title={contactData?.contact_name}
-                                placement="topRight"
-                              >
-                                <p className="contact_name">
-                                  {capitalizeFirstLetter(contactData?.contact_name)}
-                                </p>
-                              </Tooltip>
-                              <p className="contact_number">
-                                {contactData?.mobile_number}
-                              </p>
-                            </div>
-                          </div>
-
-                          <label className="custom-checkbox">
-                            <Input
-                              type="checkbox"
-                              checked={checkedContacts[contactData.id] || false} // Check the correct contact's checked status
-                              onChange={(event) =>
-                                handleCheckboxChange(event, contactData.id)
-                              }
-                            />
-                            <span className="checkbox-style"></span>
-                          </label>
-                        </div>
-                      ))
-                    ) : (
-                      <div
-                        className="no_data"
-                        onClick={() => Router.push("/createContacts")}
-                      >
-                        <p className="contacts_not_available">
-                          No contacts available here...
-                        </p>
-                        <PlusOutlined className="plus_icon" />
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="letter_numbers_container">
-                    {contactsData.length > 0 &&
-                      scrollItems?.map((scrollItem) => (
-                        <div
-                          className={
-                            scrollItem?.scrollToIndex !== -1
-                              ? "letters"
-                              : "letters-disabled"
-                          }
-                          key={scrollItem?.char}
-                          onClick={() => scrollToLetter(scrollItem)}
-                        >
-                          {scrollItem?.char}
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              )
-            }
-          </div>
-        )}
-
+          )}
+        </div>
+      }
     </div>
   );
 };

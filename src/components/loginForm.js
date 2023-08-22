@@ -13,8 +13,8 @@ function LoginForm({ login }) {
     loginPasswordError,
     emailNotFoundError,
     setLoginPasswordError,
-    setLogin,
   } = useContext(SparkContext);
+  const [islogin, setLogin] = useState("false");
   const onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -50,8 +50,7 @@ function LoginForm({ login }) {
       <Form
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
+        autoComplete="off">
         <div className="formDiv">
           <div>
             <Form.Item
@@ -65,8 +64,7 @@ function LoginForm({ login }) {
                   required: true,
                   message: "Email is required!",
                 },
-              ]}
-            >
+              ]}>
               <Input
                 placeholder="Email"
                 onChange={(e) => setLoginEmail(e.target.value)}

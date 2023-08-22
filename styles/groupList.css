@@ -12,6 +12,15 @@ body {
   width: 375pt;
   height: 667pt;
 }
+
+.groupNames {
+  max-height: 610pt;
+  overflow-y: auto;
+}
+
+body ::-webkit-scrollbar {
+  display: none;
+}
 .groupHeader {
   display: flex;
   align-items: center;

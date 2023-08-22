@@ -16,6 +16,7 @@
 .contactBackArrow {
   height: 18pt;
   width: 18pt;
+  cursor: pointer;
 }
 
 .contactTitle {

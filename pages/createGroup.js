@@ -14,7 +14,6 @@ export default function CreateGroup() {
   const { sparkContent } = useContext(SparkContext);
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
-  const [timeStamp, setTimeStamp] = useState(new Date());
   const [imageSrc, setImageSrc] = useState("");
   const [error, setError] = useState("");
   const [contacts, setContacts] = useState("");
@@ -176,7 +175,6 @@ export default function CreateGroup() {
             setError("Group name already exists");
           } else {
             const groupId = uuidv4();
-            localStorage.setItem("groupId", groupId);
             setDataToDb("group/" + `${parseCredentials.user.uid}/` + groupId, {
               group_name: groupName,
               description: description,
@@ -251,8 +249,7 @@ export default function CreateGroup() {
               onChange={onChange}
               maxCount={1}
               className="upload_div"
-              listType="picture-circle"
-            >
+              listType="picture-circle">
               Add Group photo
             </Upload>
           </ImgCrop>

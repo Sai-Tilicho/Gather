@@ -14,6 +14,7 @@
   justify-content: flex-start;
   align-items: center;
   gap: 20pt;
+  cursor: pointer;
 }
 .grpContactTitle {
   font-family: "Raleway";

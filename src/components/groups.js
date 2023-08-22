@@ -11,9 +11,9 @@ import {
 import GroupContacts from "./groupContacts";
 import { useRouter } from "next/router";
 
-const Groups = () => {
+const Groups = ({ dashBoard = false }) => {
   const [groupId, setGroupId] = useState([]);
-  const { fileList, groupData } = useContext(SparkContext);
+  const { fileList, groupData, combinedContent } = useContext(SparkContext);
   const router = useRouter();
   useEffect(() => {
     const getData = async () => {
@@ -32,27 +32,32 @@ const Groups = () => {
 
   const saveDataToDatabase = async (groupId, content, groupName, imageUrl) => {
     const db = getDatabase();
+    localStorage.setItem("groupId", groupId);
 
-    const newConversationId = uuidv4();
-    localStorage.setItem("newConversationId", newConversationId);
-    const newConversationRefPath = `conversations/${groupId}/${newConversationId}`;
+    if (!dashBoard) {
+      const newConversationId = uuidv4();
+      localStorage.setItem("newConversationId", newConversationId);
+      const newConversationRefPath = `conversations/${groupId}/${newConversationId}`;
 
-    const conversationData = {
-      groupName: groupName,
-      spark: content,
-      profileImageUrl: imageUrl,
-    };
+      const conversationData = {
+        groupName: groupName,
+        spark: content,
+        profileImageUrl: imageUrl,
+      };
 
-    try {
-      await set(ref(db, newConversationRefPath), conversationData);
-      console.log("Conversation data saved successfully!");
-    } catch (error) {
-      console.log("Error:", error);
+      try {
+        await set(ref(db, newConversationRefPath), conversationData);
+        console.log("Conversation data saved successfully!");
+      } catch (error) {
+        console.log("Error:", error);
+      }
     }
   };
 
   const handleSharing = async (groupId, groupName) => {
-    const storedData = localStorage.getItem("FilledData");
+    localStorage.setItem("groupId", groupId);
+
+    const storedData = combinedContent;
     let content = "";
     if (storedData) {
       content = storedData;
@@ -60,7 +65,6 @@ const Groups = () => {
 
     if (content) {
       router.push("/displayConversation");
-
       const imageFile = fileList[0]?.originFileObj;
       if (imageFile) {
         const storageRef = reference(
@@ -75,9 +79,12 @@ const Groups = () => {
           console.log("Error uploading image:", error);
         }
       } else {
+        router.push("/displayConversation");
         await saveDataToDatabase(groupId, content, groupName, null);
       }
     } else {
+      router.push("/displayConversation");
+      localStorage.setItem("groupId", groupId);
       console.log("Content is undefined. Cannot save conversation data.");
     }
   };

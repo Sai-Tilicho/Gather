@@ -3,15 +3,16 @@ import Image from "next/image";
 import { Tooltip } from "antd";
 import BottomSheet from "@/src/components/bottomSheet";
 import { useRouter } from "next/router";
-import { SparkContext } from "@/src/components/sparkContentContext";
-import GroupContacts from "@/src/components/groupContacts";
-import GroupList from "@/src/components/groupList";
 import Groups from "@/src/components/groups";
-import Link from "next/link";
+import { ref, child, get, onValue } from "firebase/database";
+import { database } from "@/firebase";
 
 export default function EmptyDashBoard() {
   const [open, setOpen] = useState(false);
-  const { firstName, lastName, imageURL } = useContext(SparkContext);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [imageURL, setImageURL] = useState("");
+
   const router = useRouter();
   const showDrawer = () => {
     setOpen(true);
@@ -24,6 +25,28 @@ export default function EmptyDashBoard() {
   const handleSparkRoute = () => {
     router.push("/weeklySpark");
   };
+
+  useEffect(() => {
+    let credentials = localStorage.getItem("userCredentials");
+    const parseCredentials = JSON.parse(credentials);
+    if (credentials) {
+      const starCountRef = ref(database, "users");
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+        const ids = Object.keys(data);
+        if (snapshot.exists()) {
+          for (const userId of ids) {
+            if (parseCredentials.user.uid == userId) {
+              const userData = data[userId];
+              setFirstName(userData.firstName);
+              setLastName(userData.lastName);
+              setImageURL(userData.profileImageUrl);
+            }
+          }
+        }
+      });
+    }
+  }, []);
 
   const firstLetter = firstName.toUpperCase();
   const lastLetter = lastName.toUpperCase();
@@ -67,11 +90,12 @@ export default function EmptyDashBoard() {
           </Tooltip>
         </div>
       </div>
-      <div className="accessDiv" onClick={handleSparkRoute}>
-        <div>This week's Spark</div>
+      <div className="groupCards">
+        <div className="accessDiv" onClick={handleSparkRoute}>
+          <div>This week's Spark</div>
+        </div>
+        <Groups dashBoard={true} />
       </div>
-      <Groups />
-
       <div className="bottomSheet">
         {open && (
           <div onClick={() => setOpen(false)}>

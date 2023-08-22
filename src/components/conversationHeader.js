@@ -7,14 +7,14 @@ import { SparkContext } from "./sparkContentContext";
 export default function Header() {
   const { groupName } = useContext(SparkContext);
   const router = useRouter();
-  const handleBackPage = () => {
-    router.push("/weeklySpark");
+  const handleBackPageRoute = () => {
+    router.push("/dashboard");
   };
 
   return (
     <div>
       <div className="conversationHeader">
-        <div className="backArrow" onClick={handleBackPage}>
+        <div className="backArrow" onClick={handleBackPageRoute}>
           <MdOutlineArrowBackIosNew />
         </div>
         <p className="groupName">{groupName}</p>
