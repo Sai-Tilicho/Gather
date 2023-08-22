@@ -225,13 +225,7 @@
   font-size: 15pt;
   font-weight: 500;
   color: rgb(74, 144, 226);
-}
-
-.next {
   cursor: pointer;
-  color: #909090;
-  font-weight: 500;
-  font-size: 16pt;
   font-family: "Arial MT", sans-serif;
 }
 
@@ -255,15 +249,5 @@
   padding: 3pt;
   color: rgb(10, 158, 136);
   border-radius: 6pt;
+  cursor: pointer;
 }
-
-/* .plus_icon {
-  font-size: 20pt;
-  padding: 3pt;
-  color: white;
-  background-color: rgb(10 158 136);
-  border-radius: 6pt;
-  position: absolute;
-  bottom: 7%;
-  right: 7%;
-} */
