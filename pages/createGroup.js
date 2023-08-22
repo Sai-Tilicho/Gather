@@ -1,10 +1,9 @@
-
 import {  getDataFromDb, setDataToDb, storage } from "@/firebase";
 
 import { uuidv4 } from "@firebase/util";
 import { Alert, Button, Form, Input, Upload, message } from "antd";
 import ImgCrop from "antd-img-crop";
-// import { set } from "firebase/database";
+import { set } from "firebase/database";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -58,11 +57,10 @@ export default function CreateGroup() {
         uploadBytes(imageRef, imgChange[0]?.originFileObj).then((snapshot) => {
           getDownloadURL(snapshot.ref)
             .then((url) => {
-              const currentTimeStamp = new Date().getTime();
-              const formattedTimestamp = updateTimestamp(currentTimeStamp);
+             
 
               addContactsToGroup();
-              updateContactDataToDB(url, formattedTimestamp);
+              updateContactDataToDB(url);
               success();
             })
             .catch((error) => {
@@ -126,7 +124,7 @@ export default function CreateGroup() {
     getUsersDataFromDB();
   }, []);
 
-  const updateContactDataToDB = async (imageUrl, timestamp) => {
+  const updateContactDataToDB = async (imageUrl) => {
     try {
       const credentials = localStorage.getItem("userCredentials");
       const parseCredentials = JSON.parse(credentials);

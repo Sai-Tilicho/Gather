@@ -23,12 +23,18 @@ const Groups = ({ dashBoard = false }) => {
         const groupId = groupData.val();
         const userUUIDs = Object.keys(groupId);
         setGroupId(groupId);
+
+        console.log(groupId,"id")
+
+        return groupId
+      
       } catch (error) {
         console.log("Error:", error);
       }
-    };
-    getData();
+    };  
   }, []);
+
+
 
   const saveDataToDatabase = async (groupId, content, groupName, imageUrl) => {
     const db = getDatabase();
