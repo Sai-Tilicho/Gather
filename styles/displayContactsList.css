@@ -223,7 +223,7 @@
 
 .blueLink {
   font-size: 15pt;
-  font-weight: 600;
+  font-weight: 500;
   color: rgb(74, 144, 226);
 }
 
@@ -253,11 +253,11 @@
 .plus_icon_contact {
   font-size: 20pt;
   padding: 3pt;
-  color: black;
+  color: rgb(10, 158, 136);
   border-radius: 6pt;
 }
 
-.plus_icon {
+/* .plus_icon {
   font-size: 20pt;
   padding: 3pt;
   color: white;
@@ -266,4 +266,4 @@
   position: absolute;
   bottom: 7%;
   right: 7%;
-}
+} */

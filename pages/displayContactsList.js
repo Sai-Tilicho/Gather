@@ -217,12 +217,10 @@ const DisplayContactsList = () => {
                     ) : (
                       <div
                         className="no_data"
-                        onClick={() => Router.push("/createContacts")}
                       >
                         <p className="contacts_not_available">
                           <Empty />
                         </p>
-                        <PlusOutlined className="plus_icon" />
                       </div>
                     )}
                   </div>
