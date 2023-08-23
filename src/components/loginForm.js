@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { SparkContext } from "./sparkContentContext";
+import { SparkContext } from "./context/sparkContentContext";
 
 function LoginForm({ login }) {
   const [showPassword, setShowPassword] = useState(false);

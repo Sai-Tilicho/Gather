@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { SparkContext } from "./sparkContentContext";
+import { SparkContext } from "./context/sparkContentContext";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
 import { useRouter } from "next/router";

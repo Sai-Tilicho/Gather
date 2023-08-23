@@ -4,7 +4,7 @@ import { auth } from "@/firebase";
 import LoginForm from "@/src/components/loginForm";
 import { useRouter } from "next/router";
 import { message } from "antd";
-import { SparkContext } from "@/src/components/sparkContentContext";
+import { SparkContext } from "@/src/components/context/sparkContentContext";
 function Login() {
   const {
     loginEmail,

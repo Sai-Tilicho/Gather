@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getDatabase, ref, set, get, update } from "firebase/database";
 import { v4 as uuidv4 } from "uuid";
-import { SparkContext } from "./sparkContentContext";
+import { SparkContext } from "./context/sparkContentContext";
 import { storage } from "@/firebase";
 import {
   getDownloadURL,

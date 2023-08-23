@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { RiInformationLine } from "react-icons/ri";
 import { useRouter } from "next/router";
-import { SparkContext } from "./sparkContentContext";
+import { SparkContext } from "./context/sparkContentContext";
 
 export default function Header() {
   const { groupName } = useContext(SparkContext);

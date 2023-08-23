@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { BsCamera } from "react-icons/bs";
 import { Upload, Button, message, Input } from "antd";
-import { SparkContext } from "./sparkContentContext";
+import { SparkContext } from "./context/sparkContentContext";
 import { useRouter } from "next/router";
 import { storage } from "@/firebase";
 import { uploadBytes, ref as reference } from "firebase/storage";

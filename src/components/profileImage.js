@@ -1,5 +1,5 @@
 import React from "react";
-import { SparkContext } from "./sparkContentContext";
+import { SparkContext } from "./context/sparkContentContext";
 
 export default function ProfileImage() {
 

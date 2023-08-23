@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import SignUpForm from "@/src/components/signUpForm";
 import { useRouter } from "next/router";
 import { message } from "antd";
-import { SparkContext } from "@/src/components/sparkContentContext";
+import { SparkContext } from "@/src/components/context/sparkContentContext";
 
 function SignUp() {
   const {

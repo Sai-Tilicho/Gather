@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "buildFB": "next build && next export"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.5",
+    "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.8.2",
     "antd-img-crop": "^4.12.2",
     "eslint": "8.46.0",
@@ -20,6 +22,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
+    "react-redux": "^8.1.2",
     "uuid": "^9.0.0"
   },
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",

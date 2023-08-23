@@ -1,4 +1,4 @@
-import { SparkContext } from "@/src/components/sparkContentContext";
+import { SparkContext } from "@/src/components/context/sparkContentContext";
 import SparkSection from "@/src/components/sparkSection";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
