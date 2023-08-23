@@ -6,6 +6,7 @@ import { ref, get, onValue } from "firebase/database";
 import { database } from "@/firebase";
 import Header from "@/src/components/conversationHeader";
 import { LoadingOutlined } from "@ant-design/icons";
+import Image from "next/image";
 
 export default function DisplayConversation() {
   const { sparkContent, setSparkContent, setGroupName } =
@@ -29,7 +30,6 @@ export default function DisplayConversation() {
             if (groupSnapshot.exists()) {
               const groupData = groupSnapshot.val();
               setConversationData(groupData);
-              setIsLoading(false);
             } else {
               const conversationRef = ref(
                 database,
@@ -55,6 +55,12 @@ export default function DisplayConversation() {
   }, [conversationData]);
 
   useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
     let credentials = localStorage.getItem("userCredentials");
     const parseCredentials = JSON.parse(credentials);
     if (credentials) {
@@ -73,6 +79,7 @@ export default function DisplayConversation() {
       });
     }
   }, []);
+
   const firstLetter = userData.firstName;
   const secondLetter = userData.lastName;
 
@@ -117,60 +124,70 @@ export default function DisplayConversation() {
               sparkContent={sparkContent}
             />
           </div>
-          {Object.keys(conversationData).length > 0 ? (
-            Object.keys(conversationData).map((conversationId) => {
-              const conversation = conversationData[conversationId];
-              const groupName = conversation.groupName;
-              const time_stamp = conversation.time_stamp;
-              const splitSpark = conversation.spark.split("📷");
+          {Object.keys(conversationData).length > 0
+            ? Object.keys(conversationData).map((conversationId) => {
+                const conversation = conversationData[conversationId];
+                const groupName = conversation.groupName;
+                const time_stamp = conversation.time_stamp;
+                const splitSpark = conversation.spark.split("📷");
 
-              setGroupName(groupName);
+                setGroupName(groupName);
 
-              return (
-                <div key={conversationId} className="conversationContainer">
-                  <div className="imageSparkContent">
-                    {userData.profileImageUrl ? (
-                      <img
-                        className="imageProfile"
-                        src={userData.profileImageUrl}
-                        width={53.33}
-                        height={53.33}
-                      />
-                    ) : (
-                      <p className="profileName">
-                        {firstLetter[0].toUpperCase()}
-                        {secondLetter[0].toUpperCase()}
-                      </p>
-                    )}
-                    <div className="sparkmsgHead">
-                      <div style={{ fontSize: "17pt" }}>You</div>
-                      <div style={{ fontSize: "12pt" }}>
-                        {formatTimestamp(time_stamp)}
+                return (
+                  <div key={conversationId} className="conversationContainer">
+                    {isLoading ? (
+                      <div className="loader conversationLoader">
+                        <LoadingOutlined spin />
                       </div>
-                    </div>
+                    ) : (
+                      <div>
+                        <div className="imageSparkContent">
+                          {userData.profileImageUrl ? (
+                            <Image
+                              className="imageProfile"
+                              src={userData.profileImageUrl}
+                              alt={"profileImage"}
+                              width={53.33}
+                              height={53.33}
+                            />
+                          ) : (
+                            <p className="profileName">
+                              {firstLetter[0].toUpperCase()}
+                              {secondLetter[0].toUpperCase()}
+                            </p>
+                          )}
+                          <div className="sparkmsgHead">
+                            <div style={{ fontSize: "17pt" }}>You</div>
+                            <div style={{ fontSize: "12pt" }}>
+                              {formatTimestamp(time_stamp)}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="sparkMsg">{splitSpark[0]}</div>
+                        {conversation.profileImageUrl && (
+                          <Image
+                            className="sparkImage"
+                            src={conversation?.profileImageUrl}
+                            alt="spark image"
+                            width={440}
+                            height={0}
+                          />
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <div className="sparkMsg">{splitSpark[0]}</div>
-                  {conversation.profileImageUrl && (
-                    <img
-                      className="sparkImage"
-                      src={conversation?.profileImageUrl}
-                      alt="spark image"
-                      width={440.66}
-                    />
-                  )}
+                );
+              })
+            : conversationData && (
+                <div>
+                  <p className="sparkAlert">No conversations available yet!</p>
+                  <div className="startDiv">
+                    <button className="startConversation" onClick={handleStart}>
+                      Start Conversation
+                    </button>
+                  </div>
                 </div>
-              );
-            })
-          ) : (
-            <div>
-              <p className="sparkAlert">No conversations available yet!</p>
-              <div className="startDiv">
-                <button className="startConversation" onClick={handleStart}>
-                  Start Conversation
-                </button>
-              </div>
-            </div>
-          )}
+              )}
         </div>
       )}
     </div>

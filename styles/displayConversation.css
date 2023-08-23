@@ -38,6 +38,7 @@
 
 .sparkImage {
   padding-left: 63pt;
+  height: 100% !important;
 }
 
 .sparkAlert {

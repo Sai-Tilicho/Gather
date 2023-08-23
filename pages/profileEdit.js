@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Form, Input, Upload } from "antd";
+import { Form, Input, Tooltip, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
 import { useRouter } from "next/router";
 import { getDatabase, ref, get, update, onValue } from "firebase/database";
@@ -10,6 +10,9 @@ import {
   ref as reference,
   getDownloadURL,
 } from "firebase/storage";
+import { BiLogOut } from 'react-icons/bi'
+import { auth } from "@/firebase";
+import { signOut } from "firebase/auth";
 
 const ProfileEdit = () => {
   const [firstName, setFirstName] = useState("");
@@ -34,7 +37,6 @@ const ProfileEdit = () => {
           for (const userId of ids) {
             if (parseCredentials.user.uid == userId) {
               const userData = data[userId];
-              console.log(userData);
               setFirstName(userData.firstName);
               setLastName(userData.lastName);
               if (userData?.profileImageUrl)
@@ -112,8 +114,19 @@ const ProfileEdit = () => {
     }
   };
 
+  const logout = async () => {
+    await signOut(auth);
+    localStorage.removeItem("userData")
+    router.push("/");
+  };
+
   return (
     <div className="profileMainPage">
+      <div className="logoutIcon" onClick={logout}>
+        <Tooltip placement="bottomRight" color="rgb(6, 51, 164)" title={"logout"} className="logoutTooltip">
+          <BiLogOut />
+        </Tooltip>
+      </div>
       <div className="completeProfile">Complete Your profile</div>
       <div className="inputFields">
         <div className="inputFirstName">

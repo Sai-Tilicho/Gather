@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getDataFromDb } from "@/firebase";
 import { Empty, Tooltip } from "antd";
+import Image from "next/image";
 
-export default function GroupContacts({ handleSharing = () => {} }) {
+export default function GroupContacts({ handleSharing = () => { } }) {
   const [groupData, setGroupData] = useState(null);
   const [parseCredentials, setParseCredentials] = useState(null);
   const formatTimestamp = (timestamp) => {
@@ -26,6 +27,11 @@ export default function GroupContacts({ handleSharing = () => {} }) {
     }
   };
 
+  useEffect(()=>{
+    setTimeout(()=>{
+    },1000)
+  })
+
   useEffect(() => {
     const getContactDataFromDB = () => {
       let credentials = localStorage.getItem("userCredentials");
@@ -37,7 +43,6 @@ export default function GroupContacts({ handleSharing = () => {} }) {
           return parsedCredentials?.user?.uid === groupId;
         });
 
-        console.log("insied the group", { filteredGroups });
         if (filteredGroups.length > 0) {
           const groupId = filteredGroups[0];
           getDataFromDb(
@@ -59,49 +64,45 @@ export default function GroupContacts({ handleSharing = () => {} }) {
 
   return (
     <div className="groupDataContainer">
-             <div className="dataContainer">
-          {groupData === null ? (
-            <Empty />
-          ) : Object.keys(groupData).length === 0 ? (
-            <p>No groups available</p>
-          ) : (
-            Object.keys(groupData).map((groupId) => (
-              <div
-                key={groupId}
-                className="card"
-                onClick={() => {
-                  handleSharing(groupId, groupData[groupId].group_name);
-                }}
-              >
-                <div>
-                  <img
-                    className="groupContactScreenImg"
-                    src={groupData[groupId].avatar_url}
-                    alt="Avatar"
-                  />
-                </div>
-                <div className="grpContactTitleDiv">
-                  <p className="grpContactTitle">
-                    <Tooltip title={groupData[groupId].group_name}>
-                      {groupData[groupId].group_name}
-                    </Tooltip>
-                  </p>
-                  <p className="grpContactsDescription">
-                    {groupData[groupId].description}
-                  </p>
-                </div>
-                <div style={{ display: "grid", gap: "10px" }}>
-                  <Tooltip>
-                    <p className="">
-                      {formatTimestamp(groupData[groupId].time_stamp)}
-                    </p>
-                  </Tooltip>
-                </div>
+      <div className="dataContainer">
+        {groupData ? (
+           Object.keys(groupData).map((groupId) => (
+            <div
+              key={groupId}
+              className="card"
+              onClick={() => {
+                handleSharing(groupId, groupData[groupId].group_name);
+              }}
+            >
+              <div>
+                <Image
+                  className="groupContactScreenImg"
+                  src={groupData[groupId].avatar_url}
+                  alt="Avatar"
+                  width={53}
+                  height={53} />
               </div>
-            ))
-          )}
-        </div>
-      
+              <div className="grpContactTitleDiv">
+                <p className="grpContactTitle">
+                    {groupData[groupId].group_name}
+                </p>
+                <p className="grpContactsDescription">
+                  {groupData[groupId].description}
+                </p>
+              </div>
+              <div style={{ display: "grid", gap: "10px" }}>
+                  <p className="">
+                    {formatTimestamp(groupData[groupId].time_stamp)}
+                  </p>
+              </div>
+            </div>
+          ))
+          ) : (
+          <Empty />
+         
+        )}
+      </div>
+
     </div>
   );
 }

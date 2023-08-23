@@ -42,7 +42,6 @@ export default function CreateGroup() {
     const parseCredentials = JSON.parse(credentials);
     const userId = parseCredentials.user.uid;
     getDataFromDb(`userContactNumbers/${userId}`, (contactsids) => {
-      console.log("contactsids", contactsids);
       Object.keys(contactsids).forEach((contactId) => {
         setDataToDb(
           `userContactNumbers/${userId}/${contactId}/status`,
@@ -90,8 +89,6 @@ export default function CreateGroup() {
               return parseCredentials.user.uid === userId;
             }
           );
-
-          console.log("userIdsWithTrueStatus", userIdsWithTrueStatus);
 
           if (userIdsWithTrueStatus.length > 0) {
             const selectedContactDetails = [];

@@ -114,6 +114,6 @@
 }
 
 .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover{
-  color: white;
+  color: black;
 }
 

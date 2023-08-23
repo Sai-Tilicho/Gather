@@ -12,6 +12,12 @@ body {
   display: flex;
   justify-content: center;
 }
+.logoutIcon{
+  color: rgb(225, 225, 225);
+  font-size: 30pt;
+  padding-left: 320pt;  
+  padding-top: 10pt;
+}
 
 .profileMainPage {
   width: 375pt;
@@ -33,7 +39,7 @@ body {
 
 .completeProfile {
   text-align: center;
-  padding-top: 39pt;
+  padding-top: 20pt;
   color: rgb(225, 225, 225);
   font-size: 22pt;
   letter-spacing: 0.25pt;
