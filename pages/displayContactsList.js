@@ -127,7 +127,8 @@ const DisplayContactsList = () => {
               <Link
                 href=""
                 className="Links Cancel"
-                onClick={() => Router.push("/dashboard")}>
+                onClick={() => Router.push("/dashboard")}
+              >
                 Cancel
               </Link>
 
@@ -149,13 +150,15 @@ const DisplayContactsList = () => {
                   className={`Links Next ${
                     isAnyContactSelected ? "blueLink" : ""
                   }`}
-                  onClick={() => Router.push("/createGroup")}>
+                  onClick={() => Router.push("/createGroup")}
+                >
                   Next
                 </Link>
               ) : (
                 <div
                   onClick={() => Router.push("/createContacts")}
-                  className="next">
+                  className="next"
+                >
                   <Tooltip placement="bottomRight" title={text} color={"white"}>
                     <PlusOutlined className="plus_icon_contact" />
                   </Tooltip>
@@ -187,7 +190,8 @@ const DisplayContactsList = () => {
                       className="container_for_radio"
                       key={index}
                       onClick={() => handleCheckboxChange(contactData.id, true)}
-                      id={`${index}`}>
+                      id={`${index}`}
+                    >
                       <div className="contact_container_div" key={index}>
                         <div className="avatar_container">
                           <Image
@@ -215,7 +219,8 @@ const DisplayContactsList = () => {
 
                       <label
                         className="custom-checkbox"
-                        htmlFor={`checkbox-${contactData.id}`}>
+                        htmlFor={`checkbox-${contactData.id}`}
+                      >
                         <Input
                           type="checkbox"
                           checked={checkedContacts[contactData?.id] || false}
@@ -244,7 +249,8 @@ const DisplayContactsList = () => {
                           : "letters-disabled"
                       }
                       key={scrollItem?.char}
-                      onClick={() => scrollToLetter(scrollItem)}>
+                      onClick={() => scrollToLetter(scrollItem)}
+                    >
                       {scrollItem?.char}
                     </div>
                   ))}

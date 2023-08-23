@@ -24,17 +24,14 @@ const Groups = ({ dashBoard = false }) => {
         const userUUIDs = Object.keys(groupId);
         setGroupId(groupId);
 
-        console.log(groupId,"id")
+        console.log(groupId, "id");
 
-        return groupId
-      
+        return groupId;
       } catch (error) {
         console.log("Error:", error);
       }
-    };  
+    };
   }, []);
-
-
 
   const saveDataToDatabase = async (groupId, content, groupName, imageUrl) => {
     const db = getDatabase();
@@ -49,6 +46,7 @@ const Groups = ({ dashBoard = false }) => {
         groupName: groupName,
         spark: content,
         profileImageUrl: imageUrl,
+        time_stamp: String(new Date()),
       };
 
       try {

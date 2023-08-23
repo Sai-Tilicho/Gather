@@ -1,4 +1,4 @@
-import {  getDataFromDb, setDataToDb, storage } from "@/firebase";
+import { getDataFromDb, setDataToDb, storage } from "@/firebase";
 
 import { uuidv4 } from "@firebase/util";
 import { Alert, Button, Form, Input, Upload, message } from "antd";
@@ -44,12 +44,14 @@ export default function CreateGroup() {
     getDataFromDb(`userContactNumbers/${userId}`, (contactsids) => {
       console.log("contactsids", contactsids);
       Object.keys(contactsids).forEach((contactId) => {
-        setDataToDb(`userContactNumbers/${userId}/${contactId}/status`, "false");
+        setDataToDb(
+          `userContactNumbers/${userId}/${contactId}/status`,
+          "false"
+        );
       });
     });
   };
 
-  
   const handleUpload = () => {
     if (groupName !== "" && description !== "") {
       if (imgChange?.[0]?.originFileObj) {
@@ -57,8 +59,6 @@ export default function CreateGroup() {
         uploadBytes(imageRef, imgChange[0]?.originFileObj).then((snapshot) => {
           getDownloadURL(snapshot.ref)
             .then((url) => {
-             
-
               addContactsToGroup();
               updateContactDataToDB(url);
               success();
@@ -71,7 +71,6 @@ export default function CreateGroup() {
         addContactsToGroup();
         updateContactDataToDB("/assets/profile.png");
         success();
-        
       }
     } else {
       setError("Please enter a value");
@@ -86,9 +85,11 @@ export default function CreateGroup() {
       getDataFromDb(
         "userContactNumbers",
         (userData) => {
-          const userIdsWithTrueStatus = Object.keys(userData).filter((userId) => {
-            return parseCredentials.user.uid === userId;
-          });
+          const userIdsWithTrueStatus = Object.keys(userData).filter(
+            (userId) => {
+              return parseCredentials.user.uid === userId;
+            }
+          );
 
           console.log("userIdsWithTrueStatus", userIdsWithTrueStatus);
 
@@ -214,7 +215,8 @@ export default function CreateGroup() {
               onChange={onChange}
               maxCount={1}
               className="upload_div"
-              listType="picture-circle">
+              listType="picture-circle"
+            >
               Add Group photo
             </Upload>
           </ImgCrop>
