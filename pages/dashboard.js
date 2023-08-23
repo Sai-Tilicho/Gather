@@ -4,20 +4,14 @@ import { Tooltip } from "antd";
 import BottomSheet from "@/src/components/bottomSheet";
 import { useRouter } from "next/router";
 import Groups from "@/src/components/groups";
-import { useSelector, useDispatch } from 'react-redux'
 import { ref, child, get, onValue } from "firebase/database";
 import { database } from "@/firebase";
-import { setGroupData } from "@/src/components/store/groupSlice";
 
 export default function EmptyDashBoard() {
-  const xyz = useSelector((state) => state.group.groupData)
-  const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [imageURL, setImageURL] = useState("");
-
-  console.log(xyz)
 
   const router = useRouter();
   const showDrawer = () => {
@@ -30,7 +24,6 @@ export default function EmptyDashBoard() {
 
   const handleSparkRoute = () => {
     router.push("/weeklySpark");
-    dispatch(setGroupData({ "aa": "xyxxxx" }))
   };
 
   useEffect(() => {
