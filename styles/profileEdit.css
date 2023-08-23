@@ -1,0 +1,172 @@
+@import url("https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Raleway";
+  display: flex;
+  justify-content: center;
+}
+
+.profileMainPage {
+  width: 375pt;
+  height: 667pt;
+  border: 1pt solid rgb(225, 225, 225);
+  background-color: rgb(6 51 164);
+}
+
+.lastStep {
+  display: flex;
+  justify-content: center;
+  padding-top: 11pt;
+  color: rgb(225, 225, 225);
+  font-size: 14pt;
+  letter-spacing: 0.25pt;
+  font-family: "Raleway";
+  font-weight: 400;
+}
+
+.completeProfile {
+  text-align: center;
+  padding-top: 39pt;
+  color: rgb(225, 225, 225);
+  font-size: 22pt;
+  letter-spacing: 0.25pt;
+  font-family: "Raleway";
+  font-weight: 400;
+}
+
+.inputFields {
+  padding: 37pt 64pt 0pt 65pt;
+  display: flex;
+  flex-direction: column;
+  row-gap: 28pt;
+}
+
+.inputFirstName,
+.inputLastName {
+  border-bottom: 2pt solid rgb(151 151 151);
+  padding-bottom: 1pt;
+  padding-left: 3pt;
+  caret-color: rgb(151 151 151);
+}
+
+.inputFields .ant-input {
+  font-size: 18pt;
+  padding: 0;
+  color: rgb(225, 225, 225);
+}
+
+.inputFields .ant-input::placeholder {
+  color: rgb(151 151 151);
+}
+
+.addPhoto,
+.faceBook {
+  width: 245pt;
+  height: 50pt;
+  border-radius: 22.5pt;
+  background-color: rgb(66 101 170);
+  border: 3pt solid rgb(255, 255, 255);
+  font-size: 18pt;
+  color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.faceBook {
+  margin-left: 62pt;
+}
+
+.uploadImg
+  .ant-upload-wrapper
+  .ant-upload-list.ant-upload-list-picture-circle
+  .ant-upload-list-item {
+  border: none;
+  padding: 0;
+}
+
+.uploadImg
+  .ant-upload-wrapper.ant-upload-picture-circle-wrapper
+  .ant-upload-list.ant-upload-list-picture-circle
+  .ant-upload-list-item-container,
+.uploadImg
+  .ant-upload-wrapper.ant-upload-picture-circle-wrapper
+  .ant-upload-list.ant-upload-list-picture-circle
+  .ant-upload-list-item::before {
+  width: 80pt;
+  height: 80pt;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.uploadImg
+  .ant-upload-wrapper.ant-upload-picture-circle-wrapper
+  .ant-upload.ant-upload-select {
+  width: auto !important;
+  height: auto !important;
+  vertical-align: 0%;
+  border: none;
+  border-radius: 0%;
+  white-space: normal;
+  color: #4a90e2;
+  font-size: 12pt;
+  text-align: center;
+  font-family: "Raleway";
+}
+
+.uploadImg .ant-upload-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20pt;
+}
+
+.upload_div .ant-upload-list-item-action {
+  display: none;
+}
+
+.upload_div .ant-upload-list-item-actions {
+  display: none;
+}
+
+.default {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 111pt;
+  margin-bottom: 20pt;
+  width: 295pt;
+  height: 60pt;
+  color: rgb(151 151 151);
+  letter-spacing: 0.28pt;
+  font-size: 20pt;
+  border: 3pt solid rgb(151 151 151);
+  background-color: rgb(3 6 71);
+  border-radius: 28pt;
+  margin-left: 40pt;
+}
+
+.start {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 111pt;
+  margin-bottom: 20pt;
+  width: 295pt;
+  height: 60pt;
+  color: rgb(225, 225, 225);
+  letter-spacing: 0.28pt;
+  font-size: 20pt;
+  border: 3pt solid rgb(225, 225, 225);
+  background-color: rgb(3 6 71);
+  border-radius: 28pt;
+  margin-left: 40pt;
+  cursor: pointer;
+}
