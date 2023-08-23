@@ -112,3 +112,8 @@
 .upload_container {
   padding-bottom: 14.5pt;
 }
+
+.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover{
+  color: white;
+}
+

@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getDataFromDb } from "@/firebase";
 import { Empty, Tooltip } from "antd";
-import { useRouter } from "next/router";
-import { LoadingOutlined } from "@ant-design/icons";
 
 export default function GroupContacts({ handleSharing = () => {} }) {
   const [groupData, setGroupData] = useState(null);
   const [parseCredentials, setParseCredentials] = useState(null);
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
   const formatTimestamp = (timestamp) => {
     const now = new Date();
 
@@ -48,7 +44,6 @@ export default function GroupContacts({ handleSharing = () => {} }) {
             "group/" + groupId,
             (groupData) => {
               setGroupData(groupData);
-              setIsLoading(false);
             },
             (error) => {
               console.log(error);
@@ -64,12 +59,7 @@ export default function GroupContacts({ handleSharing = () => {} }) {
 
   return (
     <div className="groupDataContainer">
-      {isLoading ? (
-        <div className="loader">
-          <LoadingOutlined spin />
-        </div>
-      ) : (
-        <div className="dataContainer">
+             <div className="dataContainer">
           {groupData === null ? (
             <Empty />
           ) : Object.keys(groupData).length === 0 ? (
@@ -111,7 +101,7 @@ export default function GroupContacts({ handleSharing = () => {} }) {
             ))
           )}
         </div>
-      )}
+      
     </div>
   );
 }

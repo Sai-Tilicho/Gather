@@ -82,13 +82,12 @@ export default function CreateContacts() {
 
   const updateContactDataToDB = (imageURL) => {
     if (number !== "" && name !== "") {
-   setDataToDb("userContactNumbers/" + `${userId}` + "/" + uuidv4(), {
+      setDataToDb("userContactNumbers/" + `${userId}` + "/" + uuidv4(), {
         mobile_number: number,
         contact_name: name,
         avatar_url: imageURL ? imageURL : "/assets/profile.png",
         status: "false",
       });
-      success();
     }
   };
 
@@ -167,41 +166,45 @@ export default function CreateContacts() {
           </Upload>
         </ImgCrop>
       </div>
-      <Form className="contactsForm">
-        <Input
-          placeholder="Enter Full Name"
-          className="contactInput"
-          onChange={handleName}
-          maxLength={30}
-          minLength={1}
-        />
-        <Input
-          placeholder="Contact Number"
-          className="contactInput"
-          onChange={handleNumber}
-          onKeyDown={handleNumberKeyDown}
-          maxLength={10}
-        />
+      <Form className="contactsForm" >
+      
+          <Input
+            placeholder="Enter Full Name"
+            className="contactInput"
+            onChange={handleName}
+            maxLength={30}
+            minLength={1}
+          />
+          <Input
+            placeholder="Contact Number"
+            className="contactInput"
+            onChange={handleNumber}
+            onKeyDown={handleNumberKeyDown}
+            maxLength={10}
+          />
         {error && <Alert type="error" message={error} />}
         <Button className="ContactSaveBtn" onClick={handleUpload}>
           Save Contact
         </Button>
       </Form>
-      <div className="createImgDiv">
-        <Image
-          src="/assets/groupOrUserDp.png"
-          alt="gather"
-          width={50}
-          height={50}
-        />
-        <Image
-          src="/assets/gatherText.png"
-          alt="gather"
-          width={120}
-          height={50}
-        />
-      </div>
+      {!error &&
+        <div className="createImgDiv">
+          <Image
+            src="/assets/groupOrUserDp.png"
+            alt="gather"
+            width={50}
+            height={50}
+          />
+          <Image
+            src="/assets/gatherText.png"
+            alt="gather"
+            width={120}
+            height={50}
+          />
+        </div>
+      }
       {contextHolder}
+
     </div>
   );
 }

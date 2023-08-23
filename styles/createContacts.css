@@ -42,7 +42,7 @@
   border: 1px solid rgba(0, 0, 0, 0.3);
   box-shadow: 1px 1px 3px 3px rgb(209, 208, 208);
   margin: 30pt 10pt;
-  padding: 10pt;
+  padding:20pt 10pt;
   border-radius: 4pt;
 }
 
@@ -62,7 +62,7 @@
   padding: 14pt;
   font-size: 16pt;
   font-family: "Raleway";
-  font-weight: 700;
+  font-weight: 500;
   background-color: rgb(239 241 244);
 }
 

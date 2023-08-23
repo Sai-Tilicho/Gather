@@ -231,7 +231,6 @@ export default function CreateGroup() {
           maxLength={20}
           minLength={1}
         />
-        {error && <Alert type="error" message={error} />}
 
         <Input
           placeholder="Enter Description"
