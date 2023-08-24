@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Tooltip } from "antd";
 import BottomSheet from "@/src/components/bottomSheet";
 import { useRouter } from "next/router";
 import Groups from "@/src/components/groups";
-import { ref, child, get, onValue } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 import { database } from "@/firebase";
 
 export default function EmptyDashBoard() {
@@ -68,6 +68,7 @@ export default function EmptyDashBoard() {
             <Image
               className="imageProfile"
               src={imageURL}
+              alt="img-profile"
               width={42.66}
               height={42.66}
             />

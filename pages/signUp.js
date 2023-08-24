@@ -4,15 +4,13 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "@/firebase";
-import { getDatabase, ref, set } from "firebase/database";
-import { v4 as uuidv4 } from "uuid";
 import SignUpForm from "@/src/components/signUpForm";
 import { useRouter } from "next/router";
 import { message } from "antd";
 import { SparkContext } from "@/src/components/context/sparkContentContext";
 import { saveDataToDatabase } from "./api/api";
 
-function SignUp() {
+const SignUp=()=> {
   const {
     registerEmail,
     registerPassword,

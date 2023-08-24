@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
@@ -14,7 +14,6 @@ function LoginForm({ login }) {
     emailNotFoundError,
     setLoginPasswordError,
   } = useContext(SparkContext);
-  const [islogin, setLogin] = useState("false");
   const onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -39,10 +38,6 @@ function LoginForm({ login }) {
       );
     }
   };
-
-  useEffect(() => {
-    setLogin(false);
-  }, []);
 
   return (
     <div className="signUpMaindiv">

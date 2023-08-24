@@ -1,6 +1,3 @@
-import React, { useState, useEffect, useContext } from "react";
-import { getDatabase, ref, set, get, update } from "firebase/database";
-import { v4 as uuidv4 } from "uuid";
 import { SparkContext } from "./context/sparkContentContext";
 import { storage } from "@/firebase";
 import {
@@ -11,29 +8,11 @@ import {
 import GroupContacts from "./groupContacts";
 import { useRouter } from "next/router";
 import { saveSparkDataToDatabase } from "@/pages/api/api";
+import { useContext } from "react";
 
 const Groups = ({ dashBoard = false }) => {
-  const [groupId, setGroupId] = useState([]);
-  const { fileList, groupData, combinedContent } = useContext(SparkContext);
+  const { fileList, combinedContent } = useContext(SparkContext);
   const router = useRouter();
-  useEffect(() => {
-    const getData = async () => {
-      const db = getDatabase();
-      try {
-        const groupData = await get(ref(db, "group"));
-        const groupId = groupData.val();
-        const userUUIDs = Object.keys(groupId);
-        setGroupId(groupId);
-
-        console.log(groupId, "id");
-
-        return groupId;
-      } catch (error) {
-        console.log("Error:", error);
-      }
-    };
-  }, []);
-
   const handleSharing = async (groupId, groupName) => {
     localStorage.setItem("groupId", groupId);
 

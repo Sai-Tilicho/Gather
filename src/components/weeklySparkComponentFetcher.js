@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { database } from "../../firebase";
-import { getDatabase, ref, child, get } from "firebase/database";
+import {  ref, child, get } from "firebase/database";
 
 function getWeekNumber(date) {
   const oneJan = new Date(date.getFullYear(), 0, 1);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getDataFromDb } from "@/firebase";
-import { Empty, Tooltip } from "antd";
+import { Empty } from "antd";
 import Image from "next/image";
 
 export default function GroupContacts({ handleSharing = () => { } }) {
@@ -26,11 +26,6 @@ export default function GroupContacts({ handleSharing = () => { } }) {
       return `${days} days ago`;
     }
   };
-
-  useEffect(()=>{
-    setTimeout(()=>{
-    },1000)
-  })
 
   useEffect(() => {
     const getContactDataFromDB = () => {

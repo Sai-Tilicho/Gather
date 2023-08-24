@@ -136,11 +136,10 @@ const DisplayContactsList = () => {
                 <p className="Add_partici">Add Participants</p>
                 <p className="count">
                   {
-                    Object.keys(checkedContacts).filter(
-                      (id) => checkedContacts[id]
-                    )?.length
-                  }{" "}
-                  /{contactsData?.length}
+                    Object.keys(checkedContacts).filter((id) => checkedContacts[id])?.length
+                  }
+                  /
+                  {contactsData?.length}
                 </p>
               </div>
 
@@ -230,7 +229,8 @@ const DisplayContactsList = () => {
                       </label>
                     </div>
                   ))
-                ) : (
+                ) : 
+                (
                   <div className="no_data">
                     <p className="contacts_not_available">
                       <Empty />
