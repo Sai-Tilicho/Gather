@@ -65,7 +65,7 @@ export default function EmptyDashBoard() {
       <div className="emptyContactHeader">
         <div className="profile" onClick={handleRouteProfileEdit}>
           {imageURL ? (
-            <img
+            <Image
               className="imageProfile"
               src={imageURL}
               width={42.66}
@@ -93,7 +93,7 @@ export default function EmptyDashBoard() {
       </div>
       <div className="groupCards">
         <div className="accessDiv" onClick={handleSparkRoute}>
-          <div>This week's Spark</div>
+          <div>This week&apos;s Spark</div>
         </div>
         <Groups dashBoard={true} />
       </div>

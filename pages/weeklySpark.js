@@ -14,7 +14,7 @@ export default function WeeklySpark() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 100);
+    }, 500);
   }, []);
 
   const handleFillSpark = () => {

@@ -14,10 +14,9 @@ body {
   width: 375pt;
   height: 667pt;
   margin: auto;
-
   border: 1pt solid rgb(151 151 151);
-  border-radius: 20px;
 }
+
 .form {
   display: flex;
   align-items: center;
@@ -28,8 +27,8 @@ body {
   padding: 30pt 0pt;
   font-size: 22pt;
   letter-spacing: 0.25pt;
-  /* color:white; */
 }
+
 .formDiv .ant-input {
   display: flex;
   justify-content: center;

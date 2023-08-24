@@ -32,7 +32,7 @@ function SignUp() {
     });
 
     return auth1;
-  }, []);
+  }, [setUser]);
 
   const register = async () => {
     if (registerPassword === "") {

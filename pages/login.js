@@ -30,7 +30,7 @@ const Login = () => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  });
 
   const autoLogin = async () => {
     const storedCredentials = localStorage.getItem("userData");

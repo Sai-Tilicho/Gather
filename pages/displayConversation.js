@@ -59,28 +59,31 @@ export default function DisplayConversation() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 2000);
   }, []);
 
   useEffect(() => {
     let credentials = localStorage.getItem("userCredentials");
     const parseCredentials = JSON.parse(credentials);
-    if (credentials) {
-      const starCountRef = ref(database, "users");
-      onValue(starCountRef, (snapshot) => {
-        const data = snapshot.val();
-        const ids = Object.keys(data);
-        if (snapshot.exists()) {
-          for (const userId of ids) {
-            if (parseCredentials?.user?.uid == userId) {
-              const userData = data[userId];
-              setUserData(userData);
+    const fetchingUserData = () => {
+      if (credentials) {
+        const starCountRef = ref(database, "users");
+        onValue(starCountRef, (snapshot) => {
+          const data = snapshot.val();
+          const ids = Object.keys(data);
+          if (snapshot.exists()) {
+            for (const userId of ids) {
+              if (parseCredentials?.user?.uid == userId) {
+                const userData = data[userId];
+                setUserData(userData);
+              }
             }
           }
-        }
-      });
-    }
-  }, []);
+        });
+      }
+    };
+    fetchingUserData();
+  }, [setGroupName]);
 
   const firstLetter = userData.firstName;
   const secondLetter = userData.lastName;
@@ -184,8 +187,7 @@ export default function DisplayConversation() {
                         <div className="iconsDiv">
                           <div
                             className="iconsLike"
-                            onClick={() => handleLike(conversationId)}
-                          >
+                            onClick={() => handleLike(conversationId)}>
                             {likesMap[conversationId] ? (
                               <Image
                                 className="like"
