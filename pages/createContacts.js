@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { Alert, Button, Form, Input, message, Upload } from "antd";
 import { IoIosArrowBack } from "react-icons/io";
@@ -15,6 +15,7 @@ import { setDataToDb } from "@/firebase";
 
 export default function CreateContacts() {
   const router = useRouter();
+  const inputRef = useRef(null);
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [error, setError] = useState("");
@@ -79,6 +80,10 @@ export default function CreateContacts() {
       e.preventDefault();
     }
   };
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const updateContactDataToDB = (imageURL) => {
     if (number !== "" && name !== "") {
@@ -166,28 +171,28 @@ export default function CreateContacts() {
           </Upload>
         </ImgCrop>
       </div>
-      <Form className="contactsForm" >
-      
-          <Input
-            placeholder="Enter Full Name"
-            className="contactInput"
-            onChange={handleName}
-            maxLength={30}
-            minLength={1}
-          />
-          <Input
-            placeholder="Contact Number"
-            className="contactInput"
-            onChange={handleNumber}
-            onKeyDown={handleNumberKeyDown}
-            maxLength={10}
-          />
+      <Form className="contactsForm">
+        <Input
+          placeholder="Enter Full Name"
+          ref={inputRef}
+          className="contactInput"
+          onChange={handleName}
+          maxLength={30}
+          minLength={1}
+        />
+        <Input
+          placeholder="Contact Number"
+          className="contactInput"
+          onChange={handleNumber}
+          onKeyDown={handleNumberKeyDown}
+          maxLength={10}
+        />
         {error && <Alert type="error" message={error} />}
         <Button className="ContactSaveBtn" onClick={handleUpload}>
           Save Contact
         </Button>
       </Form>
-      {!error &&
+      {!error && (
         <div className="createImgDiv">
           <Image
             src="/assets/groupOrUserDp.png"
@@ -202,9 +207,8 @@ export default function CreateContacts() {
             height={50}
           />
         </div>
-      }
+      )}
       {contextHolder}
-
     </div>
   );
 }

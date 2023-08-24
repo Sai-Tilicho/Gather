@@ -10,6 +10,7 @@ import {
 } from "firebase/storage";
 import GroupContacts from "./groupContacts";
 import { useRouter } from "next/router";
+import { saveSparkDataToDatabase } from "@/pages/api/api";
 
 const Groups = ({ dashBoard = false }) => {
   const [groupId, setGroupId] = useState([]);
@@ -33,31 +34,6 @@ const Groups = ({ dashBoard = false }) => {
     };
   }, []);
 
-  const saveDataToDatabase = async (groupId, content, groupName, imageUrl) => {
-    const db = getDatabase();
-    localStorage.setItem("groupId", groupId);
-
-    if (!dashBoard) {
-      const newConversationId = uuidv4();
-      localStorage.setItem("newConversationId", newConversationId);
-      const newConversationRefPath = `conversations/${groupId}/${newConversationId}`;
-
-      const conversationData = {
-        groupName: groupName,
-        spark: content,
-        profileImageUrl: imageUrl,
-        time_stamp: String(new Date()),
-      };
-
-      try {
-        await set(ref(db, newConversationRefPath), conversationData);
-        console.log("Conversation data saved successfully!");
-      } catch (error) {
-        console.log("Error:", error);
-      }
-    }
-  };
-
   const handleSharing = async (groupId, groupName) => {
     localStorage.setItem("groupId", groupId);
 
@@ -78,13 +54,25 @@ const Groups = ({ dashBoard = false }) => {
         try {
           const snapshot = await uploadBytes(storageRef, imageFile);
           const imageUrl = await getDownloadURL(snapshot.ref);
-          await saveDataToDatabase(groupId, content, groupName, imageUrl);
+          await saveSparkDataToDatabase(
+            groupId,
+            content,
+            groupName,
+            imageUrl,
+            dashBoard
+          );
         } catch (error) {
           console.log("Error uploading image:", error);
         }
       } else {
         router.push("/displayConversation");
-        await saveDataToDatabase(groupId, content, groupName, null);
+        await saveSparkDataToDatabase(
+          groupId,
+          content,
+          groupName,
+          null,
+          dashBoard
+        );
       }
     } else {
       router.push("/displayConversation");

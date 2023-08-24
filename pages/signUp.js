@@ -10,6 +10,7 @@ import SignUpForm from "@/src/components/signUpForm";
 import { useRouter } from "next/router";
 import { message } from "antd";
 import { SparkContext } from "@/src/components/context/sparkContentContext";
+import { saveDataToDatabase } from "./api/api";
 
 function SignUp() {
   const {
@@ -32,25 +33,6 @@ function SignUp() {
 
     return auth1;
   }, []);
-
-  const saveDataToDatabase = async (firstName, lastName, email, userId) => {
-    const db = getDatabase();
-    const newUserRefPath = `users/${userId}`;
-
-    const userData = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-    };
-
-    await set(ref(db, newUserRefPath), userData, (error) => {
-      if (error) {
-        console.log("Error:", error);
-      } else {
-        console.log("User data saved successfully!");
-      }
-    });
-  };
 
   const register = async () => {
     if (registerPassword === "") {

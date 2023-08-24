@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { SparkContext } from "./context/sparkContentContext";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import Groups from "./groups";
 
 const GroupList = () => {
-  const { fileList, groupData } = useContext(SparkContext);
+  const { groupData } = useContext(SparkContext);
   const router = useRouter();
 
   const handleBack = () => {

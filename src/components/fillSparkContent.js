@@ -94,10 +94,12 @@ export default function FillSparkContent({ content }) {
               listType="picture"
               fileList={fileList}
               onChange={onChange}
-              onRemove={() => setFileList([])}>
+              onRemove={() => setFileList([])}
+            >
               <Button
                 icon={<BsCamera size={18} color="rgb(66 69 83)" />}
-                className="Photo">
+                className="Photo"
+              >
                 add photo
               </Button>
             </Upload>
@@ -109,7 +111,8 @@ export default function FillSparkContent({ content }) {
       <div className="button">
         <button
           className={`shareButton ${areAllRequiredFilled ? "enable" : ""}`}
-          onClick={handleShareClick}>
+          onClick={handleShareClick}
+        >
           SHARE
         </button>
       </div>

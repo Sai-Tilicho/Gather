@@ -15,6 +15,8 @@ export default function DisplayConversation() {
   const [conversationData, setConversationData] = useState({});
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [like, setLike] = useState(false);
+  const [likesMap, setLikesMap] = useState({});
 
   useEffect(() => {
     let credentials = localStorage.getItem("userCredentials");
@@ -108,6 +110,12 @@ export default function DisplayConversation() {
     }
   };
 
+  const handleLike = (conversationId) => {
+    const updatedLikesMap = { ...likesMap };
+    updatedLikesMap[conversationId] = !likesMap[conversationId];
+    setLikesMap(updatedLikesMap);
+  };
+
   return (
     <div className="conversationDiv">
       <Header />
@@ -173,6 +181,39 @@ export default function DisplayConversation() {
                             height={0}
                           />
                         )}
+                        <div className="iconsDiv">
+                          <div
+                            className="iconsLike"
+                            onClick={() => handleLike(conversationId)}
+                          >
+                            {likesMap[conversationId] ? (
+                              <Image
+                                className="like"
+                                src="/assets/heartLike.png"
+                                alt="disLike"
+                                width={35}
+                                height={35}
+                              />
+                            ) : (
+                              <Image
+                                className="disLike"
+                                src="/assets/heart.png"
+                                alt="like"
+                                width={35}
+                                height={35}
+                              />
+                            )}
+                          </div>
+                          <div>
+                            <Image
+                              className="comment"
+                              src="/assets/comment.png"
+                              alt="like"
+                              width={32}
+                              height={32}
+                            />
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>

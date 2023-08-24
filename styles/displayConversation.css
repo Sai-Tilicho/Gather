@@ -78,3 +78,9 @@
 body ::-webkit-scrollbar {
   display: none;
 }
+
+.iconsDiv {
+  padding: 14.1pt 0pt 0pt 60pt;
+  display: flex;
+  gap: 24.1pt;
+}

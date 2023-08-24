@@ -1,17 +1,16 @@
 import { getDataFromDb, setDataToDb, storage } from "@/firebase";
-
 import { uuidv4 } from "@firebase/util";
 import { Alert, Button, Form, Input, Upload, message } from "antd";
 import ImgCrop from "antd-img-crop";
-import { set } from "firebase/database";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 
 export default function CreateGroup() {
   const router = useRouter();
+  const inputRef = useRef(null);
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
   const [imageSrc, setImageSrc] = useState("");
@@ -176,6 +175,10 @@ export default function CreateGroup() {
     }
   };
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const onPreview = async (file) => {
     let src = "/assets/profile.png";
     if (!src) {
@@ -223,6 +226,7 @@ export default function CreateGroup() {
       <Form className="grpForm">
         <Input
           placeholder="Enter Group Name"
+          ref={inputRef}
           className="groupInput"
           onChange={handleGroupName}
           maxLength={20}

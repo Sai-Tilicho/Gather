@@ -23,12 +23,8 @@ const Login = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setLoggedInUser(user);
-      if (user) {
-        autoLogin();
-      }
-      else {
-        setIsLoading(false)
-      }
+      autoLogin();
+      setIsLoading(false);
     });
 
     return () => {
@@ -44,7 +40,11 @@ const Login = () => {
         const { email, password } = parsedCredentials;
         router.push("/dashboard");
 
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
         messageApi.open({
           type: "success",
           content: "Auto-login successful",
@@ -61,8 +61,8 @@ const Login = () => {
           });
         }
       }
-    };
-  }
+    }
+  };
 
   const login = async () => {
     setEmailNotFoundError("");
@@ -87,7 +87,10 @@ const Login = () => {
         });
         const storage = JSON.stringify(userCredential);
         localStorage.setItem("userCredentials", storage);
-        const storedData = JSON.stringify({ email: loginEmail, password: loginPassword });
+        const storedData = JSON.stringify({
+          email: loginEmail,
+          password: loginPassword,
+        });
         localStorage.setItem("userData", storedData);
 
         router.push("/dashboard");
@@ -104,18 +107,19 @@ const Login = () => {
     }
   };
 
-
   return (
     <div>
       {isLoading ? (
-        <div className="loader"> <LoadingOutlined spin /></div>
+        <div className="loader">
+          {" "}
+          <LoadingOutlined spin />
+        </div>
       ) : (
         <LoginForm login={login} />
       )}
       <div>{contextHolder}</div>
     </div>
   );
-
-}
+};
 
 export default Login;

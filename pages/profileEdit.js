@@ -10,12 +10,14 @@ import {
   ref as reference,
   getDownloadURL,
 } from "firebase/storage";
-import { BiLogOut } from 'react-icons/bi'
+import { BiLogOut } from "react-icons/bi";
 import { auth } from "@/firebase";
 import { signOut } from "firebase/auth";
+import { SparkContext } from "@/src/components/context/sparkContentContext";
 
 const ProfileEdit = () => {
   const [firstName, setFirstName] = useState("");
+  const { setLoginPassword } = useContext(SparkContext);
   const [lastName, setLastName] = useState("");
   const [imgChange, setImgChange] = useState([
     {
@@ -24,6 +26,8 @@ const ProfileEdit = () => {
       url: "/assets/profile.png",
     },
   ]);
+  const inputRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     let credentials = localStorage.getItem("userCredentials");
@@ -53,9 +57,6 @@ const ProfileEdit = () => {
       });
     }
   }, []);
-
-  const inputRef = useRef(null);
-  const router = useRouter();
 
   const onChange = ({ fileList }) => {
     setImgChange((prv) => [...fileList]);
@@ -116,14 +117,20 @@ const ProfileEdit = () => {
 
   const logout = async () => {
     await signOut(auth);
-    localStorage.removeItem("userData")
+    localStorage.removeItem("userData");
+    setLoginPassword("");
     router.push("/");
   };
 
   return (
     <div className="profileMainPage">
       <div className="logoutIcon" onClick={logout}>
-        <Tooltip placement="bottomRight" color="rgb(6, 51, 164)" title={"logout"} className="logoutTooltip">
+        <Tooltip
+          placement="bottomRight"
+          color="rgb(6, 51, 164)"
+          title={"logout"}
+          className="logoutTooltip"
+        >
           <BiLogOut />
         </Tooltip>
       </div>
@@ -160,7 +167,8 @@ const ProfileEdit = () => {
               maxCount={1}
               className="upload_div"
               listType="picture-circle"
-              showRemoveIcon={false}>
+              showRemoveIcon={false}
+            >
               <div className="addPhoto"> Add a photo</div>
             </Upload>
           </ImgCrop>
@@ -173,7 +181,8 @@ const ProfileEdit = () => {
             type="button"
             className={firstName && lastName ? "start" : "default"}
             disabled={!isFormComplete}
-            onClick={handleRouteDashboard}>
+            onClick={handleRouteDashboard}
+          >
             Save
           </button>
         </Form.Item>
