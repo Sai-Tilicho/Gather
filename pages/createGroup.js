@@ -202,7 +202,7 @@ export default function CreateGroup() {
       <div className="createGroupDiv">
         <IoIosArrowBack
           className="groupBackArrow"
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/displayContactsList")}
         />
         <p className="createGroupTitle">Create Group</p>
       </div>
@@ -215,8 +215,7 @@ export default function CreateGroup() {
               onChange={onChange}
               maxCount={1}
               className="upload_div"
-              listType="picture-circle"
-            >
+              listType="picture-circle">
               Add Group photo
             </Upload>
           </ImgCrop>

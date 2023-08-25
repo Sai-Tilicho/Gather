@@ -7,7 +7,7 @@ import {
   PlusOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import { getContactData, handleInteraction } from "./api/api";
 
@@ -21,6 +21,7 @@ const getUserCredentials = () => {
 };
 
 const DisplayContactsList = () => {
+  const router = useRouter();
   const [contactsData, setContactsData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isAnyContactSelected, setIsAnyContactSelected] = useState(false);
@@ -124,40 +125,36 @@ const DisplayContactsList = () => {
         <div>
           <div className="header-container">
             <div className="top_header">
-              <Link
-                href=""
+              <div
                 className="Links Cancel"
-                onClick={() => Router.push("/dashboard")}
-              >
+                onClick={() => router.push("/dashboard")}>
                 Cancel
-              </Link>
+              </div>
 
               <div className="add_partici_container">
                 <p className="Add_partici">Add Participants</p>
                 <p className="count">
                   {
-                    Object.keys(checkedContacts).filter((id) => checkedContacts[id])?.length
+                    Object.keys(checkedContacts).filter(
+                      (id) => checkedContacts[id]
+                    )?.length
                   }
-                  /
-                  {contactsData?.length}
+                  /{contactsData?.length}
                 </p>
               </div>
 
               {isAnyContactSelected ? (
-                <Link
-                  href=""
+                <div
                   className={`Links Next ${
                     isAnyContactSelected ? "blueLink" : ""
                   }`}
-                  onClick={() => Router.push("/createGroup")}
-                >
+                  onClick={() => router.push("/createGroup")}>
                   Next
-                </Link>
+                </div>
               ) : (
                 <div
-                  onClick={() => Router.push("/createContacts")}
-                  className="next"
-                >
+                  onClick={() => router.push("/createContacts")}
+                  className="next">
                   <Tooltip placement="bottomRight" title={text} color={"white"}>
                     <PlusOutlined className="plus_icon_contact" />
                   </Tooltip>
@@ -189,8 +186,7 @@ const DisplayContactsList = () => {
                       className="container_for_radio"
                       key={index}
                       onClick={() => handleCheckboxChange(contactData.id, true)}
-                      id={`${index}`}
-                    >
+                      id={`${index}`}>
                       <div className="contact_container_div" key={index}>
                         <div className="avatar_container">
                           <Image
@@ -218,8 +214,7 @@ const DisplayContactsList = () => {
 
                       <label
                         className="custom-checkbox"
-                        htmlFor={`checkbox-${contactData.id}`}
-                      >
+                        htmlFor={`checkbox-${contactData.id}`}>
                         <Input
                           type="checkbox"
                           checked={checkedContacts[contactData?.id] || false}
@@ -229,8 +224,7 @@ const DisplayContactsList = () => {
                       </label>
                     </div>
                   ))
-                ) : 
-                (
+                ) : (
                   <div className="no_data">
                     <p className="contacts_not_available">
                       <Empty />
@@ -249,8 +243,7 @@ const DisplayContactsList = () => {
                           : "letters-disabled"
                       }
                       key={scrollItem?.char}
-                      onClick={() => scrollToLetter(scrollItem)}
-                    >
+                      onClick={() => scrollToLetter(scrollItem)}>
                       {scrollItem?.char}
                     </div>
                   ))}
