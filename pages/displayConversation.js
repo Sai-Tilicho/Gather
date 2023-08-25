@@ -54,7 +54,7 @@ export default function DisplayConversation() {
     conversationDataFromDB();
     const intervalId = setInterval(conversationDataFromDB, 1000);
     return () => clearInterval(intervalId);
-  }, [conversationData]);
+  }, [conversationData, setGroupName]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -83,7 +83,7 @@ export default function DisplayConversation() {
       }
     };
     fetchingUserData();
-  }, [setGroupName]);
+  }, []);
 
   const firstLetter = userData.firstName;
   const secondLetter = userData.lastName;
@@ -187,7 +187,8 @@ export default function DisplayConversation() {
                         <div className="iconsDiv">
                           <div
                             className="iconsLike"
-                            onClick={() => handleLike(conversationId)}>
+                            onClick={() => handleLike(conversationId)}
+                          >
                             {likesMap[conversationId] ? (
                               <Image
                                 className="like"
