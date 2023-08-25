@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "nodemon server.js",
     "lint": "next lint",
     "buildFB": "next build && next export"
   },
@@ -16,9 +16,11 @@
     "antd-img-crop": "^4.12.2",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
+    "express": "^4.18.2",
     "firebase": "^10.1.0",
     "lodash": "^4.17.21",
     "next": "13.4.13",
+    "nodemon": "^3.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
