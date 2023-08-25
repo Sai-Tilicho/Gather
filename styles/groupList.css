@@ -1,0 +1,64 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Raleway";
+}
+.groupList {
+  border: 1pt solid rgb(151 151 151);
+  border-radius: 4pt;
+  width: 375pt;
+  height: 667pt;
+}
+
+.groupNames {
+  max-height: 610pt;
+  overflow-y: auto;
+}
+
+body ::-webkit-scrollbar {
+  display: none;
+}
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 50pt;
+  padding-bottom: 13.4pt;
+  padding-top: 16pt;
+  padding-left: 10pt;
+  border: 1px solid rgb(225, 225, 225);
+  border-top-right-radius: 4pt;
+  border-top-left-radius: 4pt;
+  font-size: 17pt;
+}
+.forward {
+  font-weight: 500;
+  font-size: 17pt;
+  text-align: center;
+}
+.card:hover {
+  background-color: rgb(225, 225, 225);
+}
+.btn {
+  background-color: rgb(10 158 136);
+  border-radius: 4pt;
+  border: none;
+  box-shadow: 0pt 2pt 4pt rgba(20, 31, 77, 0.3);
+  height: 30pt;
+  margin: 25pt 11pt;
+  color: white;
+  font-size: 12pt;
+  letter-spacing: 1.14pt;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10pt;
+}
+
+.buttonDiv {
+  padding-top: 20pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
