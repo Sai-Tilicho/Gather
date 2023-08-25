@@ -12,11 +12,9 @@ body {
   display: flex;
   justify-content: center;
 }
-.logoutIcon{
+.logoutIcon {
   color: rgb(225, 225, 225);
   font-size: 30pt;
-  padding-left: 320pt;  
-  padding-top: 10pt;
 }
 
 .profileMainPage {
@@ -175,4 +173,12 @@ body {
   border-radius: 28pt;
   margin-left: 40pt;
   cursor: pointer;
+}
+
+.profileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10pt;
+  padding-right: 10pt;
 }
