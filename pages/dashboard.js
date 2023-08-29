@@ -7,17 +7,29 @@ import Groups from "@/src/components/groups";
 import { useSelector, useDispatch } from 'react-redux'
 import { ref, child, get, onValue } from "firebase/database";
 import { database } from "@/firebase";
-import { setGroupData } from "@/src/components/store/groupSlice";
+import { setGroupData, productsList } from "@/src/components/store/groupSlice";
 
 export default function EmptyDashBoard() {
   const xyz = useSelector((state) => state.group.groupData)
+  const products = useSelector((state) => state.group.products)
+  const error = useSelector((state) => state.group.error)
+  const pending = useSelector((state) => state.group.pending)
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [imageURL, setImageURL] = useState("");
 
-  console.log(xyz)
+  console.log(products, error, pending)
+
+  // useEffect(() => {
+  //   fetch(
+  //     "https://api.finefoods.refine.dev/products")
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       console.log(json)
+  //     })
+  // }, [])
 
   const router = useRouter();
   const showDrawer = () => {
@@ -29,8 +41,9 @@ export default function EmptyDashBoard() {
   };
 
   const handleSparkRoute = () => {
-    router.push("/weeklySpark");
+    // router.push("/weeklySpark");
     dispatch(setGroupData({ "aa": "xyxxxx" }))
+    dispatch(productsList({ "name": "products" }))
   };
 
   useEffect(() => {
@@ -102,7 +115,7 @@ export default function EmptyDashBoard() {
         <div className="accessDiv" onClick={handleSparkRoute}>
           <div>This week's Spark</div>
         </div>
-        <Groups dashBoard={true} />
+        {/* <Groups dashBoard={true} /> */}
       </div>
       <div className="bottomSheet">
         {open && (
